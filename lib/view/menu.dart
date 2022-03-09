@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_space_data/view/selection_menu.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
@@ -67,32 +68,42 @@ class ButtonItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Container(
-        height: 350,
-        width: 350,
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ImageIcon(
-              AssetImage(
-                  "assets/images/${iconButtons.elementAt(i).elementAt(j)}.png"),
-              color: Colors.white,
-              size: 250,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: Text(textButtons.elementAt(i).elementAt(j),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SelectionMenu()),
+          );
+        },
+        child: Container(
+          height: 350,
+          width: 350,
+          decoration: BoxDecoration(
+            color: Colors.grey[900],
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ImageIcon(
+                AssetImage(
+                    "assets/images/${iconButtons.elementAt(i).elementAt(j)}.png"),
+                color: Colors.white,
+                size: 250,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: Text(
+                  textButtons.elementAt(i).elementAt(j),
                   style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'Doctor Glitch',
                     fontSize: 30,
-                  )),
-            ),
-          ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
