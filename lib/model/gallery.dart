@@ -1,9 +1,5 @@
 class Gallery {
-  final List<String> _pictures;
+  final List<String> pictures;
 
-  Gallery(this._pictures);
-
-  List<String> get pictures {
-    return _pictures;
-  }
+  Gallery(this.pictures);
 }

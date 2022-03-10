@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 
 // ! Remove after
 void main() async {
-  // var pictures = APIManager.apiPictures("saturn");
-  // print(MapToObjectManager.mapToGallery(pictures).pictures);
+  Future<List<Map>> pictures = APIManager.apiPictures("saturn");
+  print(MapToObjectManager.mapToGallery(pictures).pictures);
 
-  print(APIManager.apiBodies());
+  // print(APIManager.apiBodies());
   // APIManager.apiPictures('saturn');
 }
 
@@ -18,7 +18,7 @@ class APIManager {
     var response = jsonDecode(await http
         .read(Uri.parse('https://api.le-systeme-solaire.net/rest/bodies/')));
     var bodies = response['bodies'];
-    //print(bodies);
+    print(bodies);
     return bodies;
   }
 

@@ -1,7 +1,7 @@
 import 'body.dart';
 
 class SolarSystem {
-  final List<Body> _bodies;
+  final List<Body> bodies;
 
-  SolarSystem(this._bodies);
+  SolarSystem(this.bodies);
 }

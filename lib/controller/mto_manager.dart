@@ -94,49 +94,47 @@ class MapToObjectManager {
     }
 
     return Body(
-      id,
-      name,
-      englishName,
-      isPlanet,
-      moons,
-      semimajorAxis,
-      perihelion,
-      eccentricity,
-      inclination,
-      mass,
-      vol,
-      density,
-      gravity,
-      escape,
-      meanRadius,
-      equaRadius,
-      polarRadius,
-      flattening,
-      dimension,
-      sideralOrbit,
-      sideralRotation,
-      aroundPlanet,
-      discoveredBy,
-      discoveryDate,
-      alternativeName,
-      axialTilt,
-      avgTemp,
-      mainAnomaly,
-      argPeriapsis,
-      longAscNode,
-      bodyType,
-      null,
+      id: id,
+      name: name,
+      englishName: englishName,
+      isPlanet: isPlanet,
+      moons: moons,
+      semimajorAxis: semimajorAxis,
+      perihelion: perihelion,
+      eccentricity: eccentricity,
+      inclination: inclination,
+      mass: mass,
+      vol: vol,
+      density: density,
+      gravity: gravity,
+      escape: escape,
+      meanRadius: meanRadius,
+      equaRadius: equaRadius,
+      polarRadius: polarRadius,
+      flattening: flattening,
+      dimension: dimension,
+      sideralOrbit: sideralOrbit,
+      sideralRotation: sideralRotation,
+      aroundPlanet: aroundPlanet,
+      discoveredBy: discoveredBy,
+      discoveryDate: discoveryDate,
+      alternativeName: alternativeName,
+      axialTilt: axialTilt,
+      avgTemp: avgTemp,
+      mainAnomaly: mainAnomaly,
+      argPeriapsis: argPeriapsis,
+      longAscNode: longAscNode,
+      bodyType: bodyType,
+      gallery: null,
     );
   }
 
-  static Gallery mapToGallery(List<Map> mapPictures) {
+  static Gallery mapToGallery(Future<List<Map>> mapPictures) {
     List<String> pictures = [];
 
-    if (mapPictures.isNotEmpty) {
-      for (Map mapPicture in mapPictures) {
-        if (mapPicture['data'][0]['media_type'] == 'image') {
-          pictures.add(mapPicture['links'][0]['href']);
-        }
+    for (Map mapPicture in mapPictures as List<Map>) {
+      if (mapPicture['data'][0]['media_type'] == 'image') {
+        pictures.add(mapPicture['links'][0]['href']);
       }
     }
 
