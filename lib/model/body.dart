@@ -33,7 +33,7 @@ class Body {
   final double argPeriapsis;
   final double longAscNode;
   final BodyType? bodyType;
-  final Gallery? gallery;
+  final Gallery gallery;
 
   Body({
     required this.id,
@@ -69,4 +69,11 @@ class Body {
     required this.bodyType,
     required this.gallery,
   });
+
+  @override
+  String toString() {
+    return "Nom : $name\n"
+        "Type d'astre : $bodyType\n"
+        "Nombre d'images : $gallery\n\n";
+  }
 }

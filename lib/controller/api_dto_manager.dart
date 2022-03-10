@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_space_data/model/solar_system.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/body.dart';
@@ -8,12 +9,11 @@ import '../model/gallery.dart';
 
 // ! Remove after
 void main() {
-  DTOManager.jsonToGallery('saturn');
-  DTOManager.jsonToBodies();
+  DTOManager.jsonToSolarSystem();
 }
 
 class DTOManager {
-  static Future<List<Body>> jsonToBodies() async {
+  static Future<SolarSystem> jsonToSolarSystem() async {
     // * API request
     var response = jsonDecode(await http
         .read(Uri.parse('https://api.le-systeme-solaire.net/rest/bodies/')));
@@ -22,13 +22,15 @@ class DTOManager {
     // * Mapping
     List<Body> bodies = [];
     for (Map jsonBody in jsonBodies) {
-      bodies.add(DTOManager.jsonToBody(jsonBody));
+      Body body = await DTOManager._jsonToBody(jsonBody);
+      print(body);
+      bodies.add(body);
     }
 
-    return bodies;
+    return SolarSystem(bodies);
   }
 
-  static Body jsonToBody(Map jsonBody) {
+  static Future<Body> _jsonToBody(Map jsonBody) async {
     String id = jsonBody['id'];
     String name = jsonBody['name'];
     String englishName = jsonBody['englishName'];
@@ -107,6 +109,8 @@ class DTOManager {
           bodyType = BodyType.star;
         }
     }
+    Gallery gallery = await DTOManager._jsonToGallery(englishName);
+
     return Body(
       id: id,
       name: name,
@@ -139,11 +143,11 @@ class DTOManager {
       argPeriapsis: argPeriapsis,
       longAscNode: longAscNode,
       bodyType: bodyType,
-      gallery: null,
+      gallery: gallery,
     );
   }
 
-  static Future<Gallery> jsonToGallery(String bodyName) async {
+  static Future<Gallery> _jsonToGallery(String bodyName) async {
     // * API request
     var response = jsonDecode(await http
         .read(Uri.parse('https://images-api.nasa.gov/search?q=$bodyName')));
@@ -157,7 +161,7 @@ class DTOManager {
         pictures.add(mapPicture['links'][0]['href']);
       }
     }
-    print(pictures);
+
     return Gallery(pictures);
   }
 }
