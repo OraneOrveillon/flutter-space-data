@@ -1,6 +1,7 @@
 import 'body_type.dart';
 import 'gallery.dart';
 
+/// A celestial object with a bunch of characteristics
 class Body {
   final String id;
   final String name;

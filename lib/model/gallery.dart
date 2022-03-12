@@ -1,3 +1,4 @@
+/// A list of picture links
 class Gallery {
   final List<String> pictures;
 

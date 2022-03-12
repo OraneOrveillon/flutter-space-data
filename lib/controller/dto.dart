@@ -1,25 +1,21 @@
-import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_space_data/controller/api.dart';
 import 'package:flutter_space_data/model/solar_system.dart';
-import 'package:http/http.dart' as http;
 
 import '../model/body.dart';
 import '../model/body_type.dart';
 import '../model/gallery.dart';
 
-// ! Remove after
-void main() {
-  DTOManager.jsonToSolarSystem();
+// TODO Remove after
+Future<void> main() async {
+  // ? Don't forget 'await' keyword
+  DTOManager.jsonToSolarSystem(await APIManager.apiBodies());
 }
 
+/// Converts json data into objects
 class DTOManager {
-  static Future<SolarSystem> jsonToSolarSystem() async {
-    // * API request
-    var response = jsonDecode(await http
-        .read(Uri.parse('https://api.le-systeme-solaire.net/rest/bodies/')));
-    var jsonBodies = response['bodies'];
-
-    // * Mapping
+  /// Transforms a list of [jsonBodies] into a [SolarSystem]
+  static Future<SolarSystem> jsonToSolarSystem(List jsonBodies) async {
     List<Body> bodies = [];
     for (Map jsonBody in jsonBodies) {
       Body body = await DTOManager._jsonToBody(jsonBody);
@@ -30,13 +26,13 @@ class DTOManager {
     return SolarSystem(bodies);
   }
 
+  /// Transforms a [jsonBody] into a [Body]
   static Future<Body> _jsonToBody(Map jsonBody) async {
     String id = jsonBody['id'];
     String name = jsonBody['name'];
     String englishName = jsonBody['englishName'];
     bool isPlanet = jsonBody['isPlanet'];
     List<String>? moons;
-
     if (jsonBody['moon'] != null) {
       moons = [];
       for (Map moon in jsonBody['moons']) {
@@ -45,7 +41,6 @@ class DTOManager {
     } else {
       moons = null;
     }
-
     int semimajorAxis = jsonBody['semimajorAxis'];
     int perihelion = jsonBody['perihelion'];
     double eccentricity = jsonBody['eccentricity'];
@@ -109,7 +104,9 @@ class DTOManager {
           bodyType = BodyType.star;
         }
     }
-    Gallery gallery = await DTOManager._jsonToGallery(englishName);
+    // ? Don't forget 'await' keyword
+    Gallery gallery = await DTOManager._jsonToGallery(
+        await APIManager.apiPictures(englishName));
 
     return Body(
       id: id,
@@ -147,18 +144,13 @@ class DTOManager {
     );
   }
 
-  static Future<Gallery> _jsonToGallery(String bodyName) async {
-    // * API request
-    var response = jsonDecode(await http
-        .read(Uri.parse('https://images-api.nasa.gov/search?q=$bodyName')));
-    var jsonPictures = response['collection']['items'];
-
-    // * Mapping
+  /// Transforms a list of [jsonPictures] into a [Gallery]
+  static Future<Gallery> _jsonToGallery(List jsonPictures) async {
     List<String> pictures = [];
 
-    for (Map mapPicture in jsonPictures) {
-      if (mapPicture['data'][0]['media_type'] == 'image') {
-        pictures.add(mapPicture['links'][0]['href']);
+    for (Map jsonPicture in jsonPictures) {
+      if (jsonPicture['data'][0]['media_type'] == 'image') {
+        pictures.add(jsonPicture['links'][0]['href']);
       }
     }
 
