@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/data/repository/body_repository.dart';
+import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
 import 'package:flutter_space_data/presentation/menu.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Solar System Data',
       home: RepositoryProvider(
-        create: (context) => BodyRepository(),
+        create: (context) => SolarSystemRepository(),
         child: const Menu(),
       ),
     );

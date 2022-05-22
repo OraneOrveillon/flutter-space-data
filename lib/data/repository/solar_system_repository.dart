@@ -1,10 +1,10 @@
-import 'package:flutter_space_data/data/model/body_model.dart';
+import 'package:flutter_space_data/data/model/solar_system_model.dart';
 import 'package:http/http.dart' as http;
 
-class BodyRepository {
+class SolarSystemRepository {
   final String _baseUrl = "https://api.le-systeme-solaire.net/rest/bodies/";
 
-  Future<BodyModel> getJoke() async {
+  Future<SolarSystemModel> getSolarSystem() async {
     final response = await http.get(Uri.parse(_baseUrl));
     if (response.statusCode == 200) {
       return bodyFromMap(response.body);

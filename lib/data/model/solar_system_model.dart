@@ -1,22 +1,18 @@
-// To parse this JSON data, do
-//
-//     final body = bodyFromMap(jsonString);
-
 import 'dart:convert';
 
-BodyModel bodyFromMap(String str) => BodyModel.fromMap(json.decode(str));
+SolarSystemModel bodyFromMap(String str) => SolarSystemModel.fromMap(json.decode(str));
 
-String bodyToMap(BodyModel data) => json.encode(data.toMap());
+String bodyToMap(SolarSystemModel data) => json.encode(data.toMap());
 
-class BodyModel {
-  BodyModel({
+class SolarSystemModel {
+  SolarSystemModel({
     required this.bodies,
   });
 
-  final List<BodyElement> bodies;
+  final List<BodyModel> bodies;
 
-  factory BodyModel.fromMap(Map<String, dynamic> json) => BodyModel(
-        bodies: List<BodyElement>.from(json["bodies"].map((x) => BodyElement.fromMap(x))),
+  factory SolarSystemModel.fromMap(Map<String, dynamic> json) => SolarSystemModel(
+        bodies: List<BodyModel>.from(json["bodies"].map((x) => BodyModel.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -24,8 +20,8 @@ class BodyModel {
       };
 }
 
-class BodyElement {
-  BodyElement({
+class BodyModel {
+  BodyModel({
     required this.id,
     required this.name,
     required this.englishName,
@@ -95,7 +91,7 @@ class BodyElement {
   final BodyType bodyType;
   final String rel;
 
-  factory BodyElement.fromMap(Map<String, dynamic> json) => BodyElement(
+  factory BodyModel.fromMap(Map<String, dynamic> json) => BodyModel(
         id: json["id"],
         name: json["name"],
         englishName: json["englishName"],
