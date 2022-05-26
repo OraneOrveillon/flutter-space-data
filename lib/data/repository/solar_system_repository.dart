@@ -13,3 +13,5 @@ class SolarSystemRepository {
     }
   }
 }
+
+// TODO : requêtes par type d'objet, exemple : https://api.le-systeme-solaire.net/rest.php/bodies?filter%5B%5D=bodyType%2Ceq%2CStar

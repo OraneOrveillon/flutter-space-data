@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
-import 'package:flutter_space_data/presentation/menu.dart';
+import 'package:flutter_space_data/presentation/Menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,10 +16,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Doctor Glitch',
       ),
       title: 'Solar System Data',
-      home: RepositoryProvider(
-        create: (context) => SolarSystemRepository(),
-        child: const Menu(),
-      ),
+      home: const Menu(),
     );
   }
 }
