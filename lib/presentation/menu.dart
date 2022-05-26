@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
+import 'package:flutter_space_data/presentation/components/cards.dart';
 import 'package:flutter_space_data/presentation/selection_menu.dart';
 import 'package:flutter_space_data/utils/constants.dart';
 
@@ -48,45 +49,37 @@ class Menu extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: buttons.length,
               itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => RepositoryProvider(
-                          create: (context) => SolarSystemRepository(),
-                          child: buttons[index]["widget"]!,
-                        ),
+                return SelectionCard(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RepositoryProvider(
+                        create: (context) => SolarSystemRepository(),
+                        child: buttons[index]["widget"]!,
                       ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MyColors.accentColor,
-                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(Paddings.small),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Image.asset("assets/images/${buttons[index]["asset"]!}.png",
-                                color: MyColors.lightColor),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: Paddings.large),
-                            child: SizedBox(
-                              height: MediaQuery.of(context).size.height / 30,
-                              child: FittedBox(
-                                child: Text(
-                                  buttons[index]["label"]!,
-                                  style: const TextStyle(color: MyColors.textColor),
-                                ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(Paddings.small),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child:
+                              Image.asset("assets/images/${buttons[index]["asset"]!}.png", color: MyColors.lightColor),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: Paddings.large),
+                          child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 30,
+                            child: FittedBox(
+                              child: Text(
+                                buttons[index]["label"]!,
+                                style: const TextStyle(color: MyColors.textColor),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );

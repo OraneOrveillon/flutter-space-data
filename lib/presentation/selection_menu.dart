@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/body_bloc/solar_system_bloc.dart';
 import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
+import 'package:flutter_space_data/presentation/body.dart';
+import 'package:flutter_space_data/presentation/components/cards.dart';
+import 'package:flutter_space_data/presentation/components/titles.dart';
 import 'package:flutter_space_data/utils/constants.dart';
 
 class SelectionMenuPlanets extends StatelessWidget {
@@ -105,48 +108,37 @@ class _SelectionMenuContent extends StatelessWidget {
           /// Loaded build
           if (state is SolarSystemLoadedState) {
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(Paddings.veryLarge),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.height / 10,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          height: double.infinity,
-                          child: FittedBox(
-                            child: BackButton(
-                              color: MyColors.lightColor,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: FittedBox(
-                            child: Text(
-                              label,
-                              style: const TextStyle(color: MyColors.lightColor),
-                            ),
-                          ),
-                        ),
-                      ],
+                TopTitle(label: label),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 1.4,
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      childAspectRatio: 1,
+                      mainAxisSpacing: 50,
+                      crossAxisSpacing: 50,
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
                     itemCount: state.solarSystem.bodies.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          state.solarSystem.bodies[index].name,
-                          style: const TextStyle(color: MyColors.lightColor),
+                      return SelectionCard(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Body(body: state.solarSystem.bodies[index]),
+                          ),
                         ),
-                        subtitle: Text(
-                          state.solarSystem.bodies[index].bodyType.name,
-                          style: const TextStyle(color: MyColors.lightColor),
+                        child: Center(
+                          child: Text(
+                            state.solarSystem.bodies[index].englishName,
+                            style: const TextStyle(
+                              color: MyColors.lightColor,
+                              fontFamily: 'Baby Universe',
+                              fontSize: 30,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       );
                     },

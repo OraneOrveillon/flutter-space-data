@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 abstract class MyColors {
-  static const lightColor = Color(0xffe5dfe5);
-  static const darkColor = Color(0xff020b10);
-  static const accentColor = Color(0xff182631);
-  static const textColor = lightColor;
+  static const Color lightColor = Color(0xffe5dfe5);
+  static const Color darkColor = Color(0xff020b10);
+  static const Color accentColor = Color(0xff182631);
+  static const Color accentColor2 = Color(0xff3E4A57);
+  static const Color textColor = lightColor;
 }
 
 abstract class Paddings {
