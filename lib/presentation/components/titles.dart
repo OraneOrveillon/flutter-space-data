@@ -10,30 +10,27 @@ class TopTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(Paddings.veryLarge),
-      child: SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height / 10,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(
-              height: double.infinity,
-              child: FittedBox(
-                child: BackButton(
-                  color: MyColors.lightColor,
-                ),
+      child: Stack(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height / 10,
+            child: FittedBox(
+              child: Text(
+                label,
+                style: const TextStyle(color: MyColors.lightColor),
               ),
             ),
-            Expanded(
-              child: FittedBox(
-                child: Text(
-                  label,
-                  style: const TextStyle(color: MyColors.lightColor),
-                ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 10,
+            child: const FittedBox(
+              child: BackButton(
+                color: MyColors.lightColor,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
