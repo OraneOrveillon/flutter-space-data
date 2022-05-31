@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/bloc/body_bloc/solar_system_bloc.dart';
+import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
 import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
 import 'package:flutter_space_data/presentation/body.dart';
 import 'package:flutter_space_data/presentation/components/cards.dart';
@@ -134,8 +134,8 @@ class _SelectionMenuContent extends StatelessWidget {
                             state.solarSystem.bodies[index].englishName,
                             style: const TextStyle(
                               color: MyColors.lightColor,
-                              fontFamily: 'Baby Universe',
-                              fontSize: 30,
+                              fontFamily: 'Autobus',
+                              fontSize: 40,
                             ),
                             textAlign: TextAlign.center,
                           ),

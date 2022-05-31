@@ -13,6 +13,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   http: ^0.13.4
   equatable: ^2.0.3
+  animated_text_kit: ^4.2.1
 #  desktop_window: ^0.4.0
 
 dev_dependencies:
@@ -30,6 +31,9 @@ flutter:
     - family: Schyler
       fonts:
         - asset: assets/fonts/Doctor Glitch.otf
+    - family: Autobus
+      fonts:
+        - asset: assets/fonts/Autobus.ttf
     - family: Baby Universe
       fonts:
         - asset: assets/fonts/Baby Universe.TTF
