@@ -74,7 +74,7 @@ class Menu extends StatelessWidget {
                             child: FittedBox(
                               child: Text(
                                 buttons[index]["label"]!,
-                                style: const TextStyle(color: MyColors.textColor),
+                                style: const TextStyle(color: MyColors.lightColor),
                               ),
                             ),
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
+import 'package:flutter_space_data/data/repository/pictures_repsitory.dart';
 import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
 import 'package:flutter_space_data/presentation/info.dart';
 import 'package:flutter_space_data/presentation/components/cards.dart';
@@ -96,7 +97,6 @@ class _SelectionMenuContent extends StatelessWidget {
       backgroundColor: MyColors.darkColor,
       body: BlocBuilder<SolarSystemBloc, SolarSystemState>(
         builder: (context, state) {
-          /// Loading build
           if (state is SolarSystemLoadingState) {
             return const Center(
               child: CircularProgressIndicator(
@@ -104,8 +104,6 @@ class _SelectionMenuContent extends StatelessWidget {
               ),
             );
           }
-
-          /// Loaded build
           if (state is SolarSystemLoadedState) {
             return Column(
               children: [
@@ -126,7 +124,11 @@ class _SelectionMenuContent extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Body(body: state.solarSystem.bodies[index]),
+                            builder: (context) => RepositoryProvider(
+                              create: (context) =>
+                                  PicturesRepository(bodyName: state.solarSystem.bodies[index].englishName),
+                              child: Info(body: state.solarSystem.bodies[index]),
+                            ),
                           ),
                         ),
                         child: Center(
@@ -147,15 +149,11 @@ class _SelectionMenuContent extends StatelessWidget {
               ],
             );
           }
-
-          /// Error build
           if (state is SolarSystemErrorState) {
             return Center(
               child: Text(state.error.toString()),
             );
           }
-
-          /// Default
           return Container();
         },
       ),
