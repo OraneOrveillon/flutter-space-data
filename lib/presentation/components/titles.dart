@@ -18,7 +18,7 @@ class TopTitle extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 label,
-                style: const TextStyle(color: MyColors.lightColor),
+                style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
               ),
             ),
           ),

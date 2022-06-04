@@ -31,7 +31,7 @@ class Menu extends StatelessWidget {
               child: const FittedBox(
                 child: Text(
                   "SPACE DATA",
-                  style: TextStyle(color: MyColors.lightColor),
+                  style: TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
                 ),
               ),
             ),
@@ -74,7 +74,7 @@ class Menu extends StatelessWidget {
                             child: FittedBox(
                               child: Text(
                                 buttons[index]["label"]!,
-                                style: const TextStyle(color: MyColors.lightColor),
+                                style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
                               ),
                             ),
                           ),

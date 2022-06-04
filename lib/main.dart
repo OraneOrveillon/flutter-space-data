@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Doctor Glitch',
+        fontFamily: 'Autobus',
       ),
       title: 'Solar System Data',
       home: const Menu(),

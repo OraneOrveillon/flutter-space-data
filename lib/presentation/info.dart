@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/pictures_bloc/pictures_bloc.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_space_data/presentation/components/animated_texts.dart';
 import 'package:flutter_space_data/presentation/components/scrollbars.dart';
 import 'package:flutter_space_data/presentation/components/titles.dart';
 import 'package:flutter_space_data/utils/constants.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Info extends StatelessWidget {
   const Info({Key? key, required this.body}) : super(key: key);
@@ -119,8 +119,38 @@ class Info extends StatelessWidget {
                                         ),
                                         itemCount: state.pictures.collection!.items!.length,
                                         itemBuilder: (context, index) {
-                                          return Image.network(
-                                              state.pictures.collection!.items![index].links!.first.href!);
+                                          return GestureDetector(
+                                            onTap: () => Alert(
+                                              context: context,
+                                              closeIcon: const Icon(
+                                                Icons.close,
+                                                color: MyColors.lightColor,
+                                              ),
+                                              buttons: [],
+                                              content: SizedBox(
+                                                height: MediaQuery.of(context).size.height * 0.8,
+                                                width: MediaQuery.of(context).size.width * 0.8,
+                                                child: Image.network(
+                                                  state.pictures.collection!.items![index].links!.first.href!,
+                                                ),
+                                              ),
+                                              style: AlertStyle(
+                                                animationType: AnimationType.grow,
+                                                backgroundColor: MyColors.darkColor,
+                                                animationDuration: const Duration(milliseconds: 400),
+                                                alertBorder: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  side: const BorderSide(
+                                                    color: MyColors.lightColor,
+                                                  ),
+                                                ),
+                                                alertAlignment: Alignment.center,
+                                              ),
+                                            ).show(),
+                                            child: Image.network(
+                                              state.pictures.collection!.items![index].links!.first.href!,
+                                            ),
+                                          );
                                         },
                                       ),
                                     );

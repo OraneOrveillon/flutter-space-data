@@ -9,14 +9,11 @@ class TypingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Autobus', fontSize: 20),
-      child: AnimatedTextKit(
-        animatedTexts: [
-          TyperAnimatedText(content),
-        ],
-        isRepeatingAnimation: false,
-      ),
+    return AnimatedTextKit(
+      animatedTexts: [
+        TyperAnimatedText(content, textStyle: const TextStyle(color: MyColors.lightColor, fontSize: 20)),
+      ],
+      isRepeatingAnimation: false,
     );
   }
 }
