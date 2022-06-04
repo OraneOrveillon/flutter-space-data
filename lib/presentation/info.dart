@@ -5,6 +5,7 @@ import 'package:flutter_space_data/bloc/pictures_bloc/pictures_bloc.dart';
 import 'package:flutter_space_data/data/model/solar_system_model.dart';
 import 'package:flutter_space_data/data/repository/pictures_repsitory.dart';
 import 'package:flutter_space_data/presentation/components/animated_texts.dart';
+import 'package:flutter_space_data/presentation/components/scrollbars.dart';
 import 'package:flutter_space_data/presentation/components/titles.dart';
 import 'package:flutter_space_data/utils/constants.dart';
 
@@ -67,10 +68,7 @@ class Info extends StatelessWidget {
                             color: MyColors.accentColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: RawScrollbar(
-                            thumbColor: Colors.white,
-                            radius: const Radius.circular(20),
-                            thickness: 7,
+                          child: MyScrollbar(
                             child: ListView.separated(
                               controller: ScrollController(),
                               padding: const EdgeInsets.all(Paddings.large),
@@ -111,10 +109,7 @@ class Info extends StatelessWidget {
                                     );
                                   }
                                   if (state is PicturesLoadedState) {
-                                    return RawScrollbar(
-                                      thumbColor: Colors.white,
-                                      radius: const Radius.circular(20),
-                                      thickness: 7,
+                                    return MyScrollbar(
                                       child: GridView.builder(
                                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 5,
