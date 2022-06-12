@@ -50,23 +50,52 @@ class Info extends StatelessWidget {
                               children: [
                                 const Text(
                                   'Information :',
-                                  style: TextStyle(color: MyColors.lightColor, fontSize: 50, fontFamily: 'Autobus'),
+                                  style: TextStyle(color: MyColors.lightColor, fontSize: 50),
                                 ),
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(top: Paddings.large),
-                                    child: MyScrollbar(
-                                      child: ListView.separated(
-                                        controller: ScrollController(),
-                                        // padding: const EdgeInsets.all(Paddings.large),
-                                        separatorBuilder: (context, index) => const SizedBox(
-                                          height: Paddings.small,
-                                        ),
-                                        itemCount: bodyInfo.length,
-                                        itemBuilder: (context, index) {
-                                          return TypingText(content: bodyInfo[index]);
-                                        },
+                                    child: ListView.separated(
+                                      separatorBuilder: (context, index) => const SizedBox(
+                                        height: Paddings.small,
                                       ),
+                                      itemCount: bodyInfo.length,
+                                      controller: ScrollController(),
+                                      itemBuilder: (context, index) {
+                                        if (index != bodyInfo.length - 1) {
+                                          return TypingText(content: bodyInfo[index]);
+                                        } else {
+                                          if (body.moons != null) {
+                                            List<Widget> chipMoons = [];
+                                            for (Moon moon in body.moons!) {
+                                              chipMoons.add(
+                                                Padding(
+                                                  padding: const EdgeInsets.fromLTRB(
+                                                      0, Paddings.verySmall, 0, Paddings.verySmall),
+                                                  child: Chip(
+                                                    label: Text(
+                                                      moon.moon,
+                                                      style: const TextStyle(
+                                                        fontSize: 20,
+                                                        color: MyColors.darkColor,
+                                                      ),
+                                                    ),
+                                                    backgroundColor: MyColors.lightColor,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            return Wrap(
+                                              alignment: WrapAlignment.spaceBetween,
+                                              children: [
+                                                TypingText(content: bodyInfo[index]),
+                                                ...chipMoons,
+                                              ],
+                                            );
+                                          }
+                                          return Container();
+                                        }
+                                      },
                                     ),
                                   ),
                                 ),

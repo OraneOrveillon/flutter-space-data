@@ -20,9 +20,6 @@ class BeautifyBodyInfo {
     if (body.equaRadius != 0) {
       beautifiedBodyInfo.add('Radius : ${body.equaRadius.round()} km');
     }
-    if (body.moons != null) {
-      beautifiedBodyInfo.add('Moons : ${body.moons}');
-    }
     if (body.semimajorAxis != 0) {
       beautifiedBodyInfo.add('Semi major axis : ${body.semimajorAxis} km');
     }
@@ -69,7 +66,10 @@ class BeautifyBodyInfo {
       beautifiedBodyInfo.add('Argument of perihelion : ${body.argPeriapsis}°');
     }
     if (body.longAscNode != 0) {
-      beautifiedBodyInfo.add('Longitude of ascending node : ${body.longAscNode}°');
+      beautifiedBodyInfo.add('Longitude of ascending node :  ${body.longAscNode}°');
+    }
+    if (body.moons != null) {
+      beautifiedBodyInfo.add('Moons : ');
     }
   }
 }

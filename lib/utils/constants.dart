@@ -8,6 +8,7 @@ abstract class MyColors {
 }
 
 abstract class Paddings {
+  static const double verySmall = 5;
   static const double small = 10;
   static const double large = 20;
   static const double veryLarge = 50;
