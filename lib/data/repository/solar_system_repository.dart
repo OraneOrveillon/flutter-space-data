@@ -30,5 +30,3 @@ class SolarSystemRepository {
     }
   }
 }
-
-// TODO : url knowncount

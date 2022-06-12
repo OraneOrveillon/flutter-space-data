@@ -70,23 +70,34 @@ class Info extends StatelessWidget {
                                             for (Moon moon in body.moons!) {
                                               chipMoons.add(
                                                 Padding(
-                                                  padding: const EdgeInsets.fromLTRB(
-                                                      0, Paddings.verySmall, 0, Paddings.verySmall),
-                                                  child: Chip(
-                                                    label: Text(
-                                                      moon.moon,
-                                                      style: const TextStyle(
-                                                        fontSize: 20,
-                                                        color: MyColors.darkColor,
-                                                      ),
+                                                  padding: const EdgeInsets.all(Paddings.verySmall),
+                                                  child: ActionChip(
+                                                    labelStyle: const TextStyle(
+                                                      fontSize: 20,
+                                                      color: MyColors.darkColor,
                                                     ),
+                                                    label: Text(moon.moon),
                                                     backgroundColor: MyColors.lightColor,
+                                                    onPressed: () => {
+                                                      // TODO :
+                                                      // Navigator.push(
+                                                      //   context,
+                                                      //   MaterialPageRoute(
+                                                      //     builder: (context) => RepositoryProvider(
+                                                      //       create: (context) {
+                                                      //         print(moon.rel);
+                                                      //         return PicturesRepository(bodyName: moon.rel);
+                                                      //       },
+                                                      //       child: Info(body: body),
+                                                      //     ),
+                                                      //   ),
+                                                      // ),
+                                                    },
                                                   ),
                                                 ),
                                               );
                                             }
                                             return Wrap(
-                                              alignment: WrapAlignment.spaceBetween,
                                               children: [
                                                 TypingText(content: bodyInfo[index]),
                                                 ...chipMoons,

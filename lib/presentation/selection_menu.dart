@@ -138,7 +138,6 @@ class _SelectionMenuContent extends StatelessWidget {
                               state.solarSystem.bodies[index].englishName,
                               style: const TextStyle(
                                 color: MyColors.lightColor,
-                                fontFamily: 'Autobus',
                                 fontSize: 40,
                               ),
                               textAlign: TextAlign.center,
