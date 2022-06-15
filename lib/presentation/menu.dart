@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
-import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
 import 'package:flutter_space_data/presentation/components/cards.dart';
 import 'package:flutter_space_data/presentation/selection_menu.dart';
 import 'package:flutter_space_data/utils/constants.dart';
@@ -54,12 +52,9 @@ class Menu extends StatelessWidget {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RepositoryProvider(
-                        create: (context) => SolarSystemRepository(),
-                        child: SelectionMenu(
-                          label: buttons[index]['label'],
-                          event: buttons[index]['event'],
-                        ),
+                      builder: (context) => SelectionMenu(
+                        label: buttons[index]['label'],
+                        event: buttons[index]['event'],
                       ),
                     ),
                   ),
