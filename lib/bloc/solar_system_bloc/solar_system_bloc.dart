@@ -11,6 +11,10 @@ part 'solar_system_state.dart';
 class SolarSystemBloc extends Bloc<SolarSystemEvent, SolarSystemState> {
   final SolarSystemRepository _solarSystemRepository;
 
+  void test() {
+    print('cc');
+  }
+
   // TODO : Refactoring
   SolarSystemBloc(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
     on<LoadSolarSystemEvent>((event, emit) async {
