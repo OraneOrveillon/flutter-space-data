@@ -9,7 +9,7 @@ class SolarSystemLoadingState extends SolarSystemState {
 }
 
 class SolarSystemLoadedState extends SolarSystemState {
-  final SolarSystemModel solarSystem;
+  final SolarSystem solarSystem;
 
   SolarSystemLoadedState(this.solarSystem);
 

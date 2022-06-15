@@ -9,7 +9,7 @@ class PicturesLoadingState extends PicturesState {
 }
 
 class PicturesLoadedState extends PicturesState {
-  final PicturesModel pictures;
+  final Pictures pictures;
 
   PicturesLoadedState(this.pictures);
 

@@ -13,7 +13,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 class Info extends StatelessWidget {
   const Info({Key? key, required this.body}) : super(key: key);
 
-  final BodyModel body;
+  final Body body;
 
   @override
   Widget build(BuildContext context) {

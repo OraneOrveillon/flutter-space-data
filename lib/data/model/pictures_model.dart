@@ -1,17 +1,17 @@
 import 'dart:convert';
 
-PicturesModel bodyFromMap(String str) => PicturesModel.fromMap(json.decode(str));
+Pictures picturesFromMap(String str) => Pictures.fromMap(json.decode(str));
 
-String bodyToMap(PicturesModel data) => json.encode(data.toMap());
+String picturesToMap(Pictures data) => json.encode(data.toMap());
 
-class PicturesModel {
-  PicturesModel({
+class Pictures {
+  Pictures({
     required this.collection,
   });
 
   final Collection? collection;
 
-  factory PicturesModel.fromMap(Map<String, dynamic> json) => PicturesModel(
+  factory Pictures.fromMap(Map<String, dynamic> json) => Pictures(
         collection: json["collection"] == null ? null : Collection.fromMap(json["collection"]),
       );
 

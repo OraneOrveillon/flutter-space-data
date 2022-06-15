@@ -2,7 +2,7 @@ import 'package:flutter_space_data/data/model/solar_system_model.dart';
 
 class BeautifyBodyInfo {
   final List<String> beautifiedBodyInfo = [];
-  final BodyModel body;
+  final Body body;
 
   BeautifyBodyInfo({required this.body}) {
     if (body.discoveredBy != '') {

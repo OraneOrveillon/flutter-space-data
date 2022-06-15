@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-SolarSystemModel bodyFromMap(String str) => SolarSystemModel.fromMap(json.decode(str));
+SolarSystem solarSystemFromMap(String str) => SolarSystem.fromMap(json.decode(str));
 
-String bodyToMap(SolarSystemModel data) => json.encode(data.toMap());
+String solarSystemToMap(SolarSystem data) => json.encode(data.toMap());
 
-class SolarSystemModel {
-  SolarSystemModel({
+class SolarSystem {
+  SolarSystem({
     required this.bodies,
   });
 
-  final List<BodyModel> bodies;
+  final List<Body> bodies;
 
-  factory SolarSystemModel.fromMap(Map<String, dynamic> json) => SolarSystemModel(
-        bodies: List<BodyModel>.from(json["bodies"].map((x) => BodyModel.fromMap(x))),
+  factory SolarSystem.fromMap(Map<String, dynamic> json) => SolarSystem(
+        bodies: List<Body>.from(json["bodies"].map((x) => Body.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -20,8 +20,8 @@ class SolarSystemModel {
       };
 }
 
-class BodyModel {
-  BodyModel({
+class Body {
+  Body({
     required this.id,
     required this.name,
     required this.englishName,
@@ -91,7 +91,7 @@ class BodyModel {
   final BodyType bodyType;
   final String rel;
 
-  factory BodyModel.fromMap(Map<String, dynamic> json) => BodyModel(
+  factory Body.fromMap(Map<String, dynamic> json) => Body(
         id: json["id"],
         name: json["name"],
         englishName: json["englishName"],
