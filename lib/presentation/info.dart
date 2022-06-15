@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/pictures_bloc/pictures_bloc.dart';
 import 'package:flutter_space_data/data/model/solar_system_model.dart';
-import 'package:flutter_space_data/data/repository/pictures_repository.dart';
 import 'package:flutter_space_data/presentation/components/animated_texts.dart';
 import 'package:flutter_space_data/presentation/components/scrollbars.dart';
 import 'package:flutter_space_data/presentation/components/titles.dart';
@@ -11,18 +10,19 @@ import 'package:flutter_space_data/utils/constants.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Info extends StatelessWidget {
-  const Info({Key? key, required this.body}) : super(key: key);
+  Info({Key? key, required this.body}) : super(key: key) {
+    _picturesBloc = PicturesBloc(bodyName: body.englishName)..add(LoadPictures());
+  }
 
   final Body body;
+  late final PicturesBloc _picturesBloc;
 
   @override
   Widget build(BuildContext context) {
     List<String> bodyInfo = BeautifyBodyInfo(body: body).beautifiedBodyInfo;
 
     return BlocProvider(
-      create: (context) => PicturesBloc(
-        RepositoryProvider.of<PicturesRepository>(context),
-      )..add(LoadPicturesEvent()),
+      create: (context) => _picturesBloc,
       child: Scaffold(
         backgroundColor: MyColors.darkColor,
         body: Column(
@@ -80,18 +80,6 @@ class Info extends StatelessWidget {
                                                     backgroundColor: MyColors.lightColor,
                                                     onPressed: () => {
                                                       // TODO :
-                                                      // Navigator.push(
-                                                      //   context,
-                                                      //   MaterialPageRoute(
-                                                      //     builder: (context) => RepositoryProvider(
-                                                      //       create: (context) {
-                                                      //         print(moon.rel);
-                                                      //         return PicturesRepository(bodyName: moon.rel);
-                                                      //       },
-                                                      //       child: Info(body: body),
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
                                                     },
                                                   ),
                                                 ),
@@ -136,14 +124,14 @@ class Info extends StatelessWidget {
                             Expanded(
                               child: BlocBuilder<PicturesBloc, PicturesState>(
                                 builder: (context, state) {
-                                  if (state is PicturesLoadingState) {
+                                  if (state is PicturesLoading) {
                                     return const Center(
                                       child: CircularProgressIndicator(
                                         backgroundColor: MyColors.lightColor,
                                       ),
                                     );
                                   }
-                                  if (state is PicturesLoadedState) {
+                                  if (state is PicturesLoaded) {
                                     return MyScrollbar(
                                       child: GridView.builder(
                                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -190,7 +178,7 @@ class Info extends StatelessWidget {
                                       ),
                                     );
                                   }
-                                  if (state is PicturesErrorState) {
+                                  if (state is PicturesError) {
                                     return Center(
                                       child: Text(
                                         state.error.toString(),

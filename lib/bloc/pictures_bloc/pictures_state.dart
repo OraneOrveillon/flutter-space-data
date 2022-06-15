@@ -3,24 +3,24 @@ part of 'pictures_bloc.dart';
 @immutable
 abstract class PicturesState extends Equatable {}
 
-class PicturesLoadingState extends PicturesState {
+class PicturesLoading extends PicturesState {
   @override
   List<Object?> get props => [];
 }
 
-class PicturesLoadedState extends PicturesState {
+class PicturesLoaded extends PicturesState {
   final Pictures pictures;
 
-  PicturesLoadedState(this.pictures);
+  PicturesLoaded(this.pictures);
 
   @override
   List<Object?> get props => [pictures];
 }
 
-class PicturesErrorState extends PicturesState {
+class PicturesError extends PicturesState {
   final String error;
 
-  PicturesErrorState(this.error);
+  PicturesError(this.error);
 
   @override
   List<Object?> get props => [error];

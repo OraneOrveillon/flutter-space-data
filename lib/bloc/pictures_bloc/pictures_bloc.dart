@@ -9,16 +9,18 @@ part 'pictures_event.dart';
 part 'pictures_state.dart';
 
 class PicturesBloc extends Bloc<PicturesEvent, PicturesState> {
-  final PicturesRepository _picturesRepository;
+  late final PicturesRepository _picturesRepository;
+  final String bodyName;
 
-  PicturesBloc(this._picturesRepository) : super(PicturesLoadingState()) {
-    on<LoadPicturesEvent>((event, emit) async {
-      emit(PicturesLoadingState());
+  PicturesBloc({required this.bodyName}) : super(PicturesLoading()) {
+    _picturesRepository = PicturesRepository(bodyName: bodyName);
+    on<LoadPictures>((event, emit) async {
+      emit(PicturesLoading());
       try {
-        final solarSystem = await _picturesRepository.getPictures();
-        emit(PicturesLoadedState(solarSystem));
+        final pictures = await _picturesRepository.getPictures();
+        emit(PicturesLoaded(pictures));
       } catch (e) {
-        emit(PicturesErrorState(e.toString()));
+        emit(PicturesError(e.toString()));
       }
     });
   }
