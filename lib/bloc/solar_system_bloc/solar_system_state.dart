@@ -3,24 +3,24 @@ part of 'solar_system_bloc.dart';
 @immutable
 abstract class SolarSystemState extends Equatable {}
 
-class SolarSystemLoadingState extends SolarSystemState {
+class SolarSystemLoading extends SolarSystemState {
   @override
   List<Object?> get props => [];
 }
 
-class SolarSystemLoadedState extends SolarSystemState {
+class SolarSystemLoaded extends SolarSystemState {
   final SolarSystem solarSystem;
 
-  SolarSystemLoadedState(this.solarSystem);
+  SolarSystemLoaded(this.solarSystem);
 
   @override
   List<Object?> get props => [solarSystem];
 }
 
-class SolarSystemErrorState extends SolarSystemState {
+class SolarSystemError extends SolarSystemState {
   final String error;
 
-  SolarSystemErrorState(this.error);
+  SolarSystemError(this.error);
 
   @override
   List<Object?> get props => [error];

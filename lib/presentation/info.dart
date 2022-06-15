@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_space_data/bloc/pictures_bloc/pictures_bloc.dart';
 import 'package:flutter_space_data/data/model/solar_system_model.dart';
-import 'package:flutter_space_data/data/repository/pictures_repsitory.dart';
+import 'package:flutter_space_data/data/repository/pictures_repository.dart';
 import 'package:flutter_space_data/presentation/components/animated_texts.dart';
 import 'package:flutter_space_data/presentation/components/scrollbars.dart';
 import 'package:flutter_space_data/presentation/components/titles.dart';

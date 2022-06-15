@@ -9,90 +9,85 @@ part 'solar_system_event.dart';
 part 'solar_system_state.dart';
 
 class SolarSystemBloc extends Bloc<SolarSystemEvent, SolarSystemState> {
-  final SolarSystemRepository _solarSystemRepository;
+  final SolarSystemRepository _solarSystemRepository = SolarSystemRepository();
 
-  // TODO : Refactoring
-  SolarSystemBloc(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getAllBodies();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  SolarSystemBloc() : super(SolarSystemLoading()) {
+    on<LoadSolarSystem>(_onLoadSolarSystem);
+    on<LoadPlanets>(_onLoadPlanets);
+    on<LoadMoons>(_onLoadMoons);
+    on<LoadSun>(_onLoadSun);
+    on<LoadDwarfPlanets>(_onLoadDwarfPlanets);
+    on<LoadAsteroids>(_onLoadAsteroids);
+    on<LoadComets>(_onLoadComets);
   }
 
-  SolarSystemBloc.planets(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getPlanets();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadSolarSystem(LoadSolarSystem event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final solarSystem = await _solarSystemRepository.getAllBodies();
+      emit(SolarSystemLoaded(solarSystem));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 
-  SolarSystemBloc.moons(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getMoons();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadPlanets(LoadPlanets event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final planets = await _solarSystemRepository.getPlanets();
+      emit(SolarSystemLoaded(planets));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 
-  SolarSystemBloc.sun(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getSun();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadMoons(LoadMoons event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final moons = await _solarSystemRepository.getMoons();
+      emit(SolarSystemLoaded(moons));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 
-  SolarSystemBloc.dwarfPlanets(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getDwarfPlanets();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadSun(LoadSun event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final sun = await _solarSystemRepository.getSun();
+      emit(SolarSystemLoaded(sun));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 
-  SolarSystemBloc.asteroids(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getAsteroids();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadDwarfPlanets(LoadDwarfPlanets event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final dwarfPlanets = await _solarSystemRepository.getDwarfPlanets();
+      emit(SolarSystemLoaded(dwarfPlanets));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 
-  SolarSystemBloc.comets(this._solarSystemRepository) : super(SolarSystemLoadingState()) {
-    on<LoadSolarSystemEvent>((event, emit) async {
-      emit(SolarSystemLoadingState());
-      try {
-        final solarSystem = await _solarSystemRepository.getComets();
-        emit(SolarSystemLoadedState(solarSystem));
-      } catch (e) {
-        emit(SolarSystemErrorState(e.toString()));
-      }
-    });
+  Future<void> _onLoadAsteroids(LoadAsteroids event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final asteroids = await _solarSystemRepository.getAsteroids();
+      emit(SolarSystemLoaded(asteroids));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadComets(LoadComets event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final comets = await _solarSystemRepository.getComets();
+      emit(SolarSystemLoaded(comets));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
   }
 }

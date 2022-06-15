@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
 import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
 import 'package:flutter_space_data/presentation/components/cards.dart';
 import 'package:flutter_space_data/presentation/selection_menu.dart';
@@ -8,13 +9,13 @@ import 'package:flutter_space_data/utils/constants.dart';
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
-  static const List<Map<String, dynamic>> buttons = [
-    {"label": "PLANETS", "asset": "planet", "widget": SelectionMenuPlanets()},
-    {"label": "MOONS", "asset": "moon", "widget": SelectionMenuMoons()},
-    {"label": "SUN", "asset": "sun", "widget": SelectionMenuSun()},
-    {"label": "DWARF PLANETS", "asset": "dwarf-planet", "widget": SelectionMenuDwarfPlanets()},
-    {"label": "ASTEROIDS", "asset": "asteroid", "widget": SelectionMenuAsteroids()},
-    {"label": "COMETS", "asset": "comet", "widget": SelectionMenuComets()},
+  static List<Map<String, dynamic>> buttons = [
+    {'label': 'PLANETS', 'asset': 'planet', 'event': LoadPlanets()},
+    {'label': 'MOONS', 'asset': 'moon', 'event': LoadMoons()},
+    {'label': 'SUN', 'asset': 'sun', 'event': LoadSun()},
+    {'label': 'DWARF PLANETS', 'asset': 'dwarf-planet', 'event': LoadDwarfPlanets()},
+    {'label': 'ASTEROIDS', 'asset': 'asteroid', 'event': LoadAsteroids()},
+    {'label': 'COMETS', 'asset': 'comet', 'event': LoadComets()},
   ];
 
   @override
@@ -55,7 +56,10 @@ class Menu extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => RepositoryProvider(
                         create: (context) => SolarSystemRepository(),
-                        child: buttons[index]["widget"]!,
+                        child: SelectionMenu(
+                          label: buttons[index]['label'],
+                          event: buttons[index]['event'],
+                        ),
                       ),
                     ),
                   ),
@@ -65,7 +69,7 @@ class Menu extends StatelessWidget {
                       children: [
                         Expanded(
                           child:
-                              Image.asset("assets/images/${buttons[index]["asset"]!}.png", color: MyColors.lightColor),
+                              Image.asset("assets/images/${buttons[index]['asset']!}.png", color: MyColors.lightColor),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: Paddings.large),
@@ -73,7 +77,7 @@ class Menu extends StatelessWidget {
                             height: MediaQuery.of(context).size.height / 30,
                             child: FittedBox(
                               child: Text(
-                                buttons[index]["label"]!,
+                                buttons[index]['label']!,
                                 style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
                               ),
                             ),
