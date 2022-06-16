@@ -21,3 +21,5 @@ class LoadDwarfPlanets extends SolarSystemEvent {}
 class LoadAsteroids extends SolarSystemEvent {}
 
 class LoadComets extends SolarSystemEvent {}
+
+class LoadSingleBody extends SolarSystemEvent {}

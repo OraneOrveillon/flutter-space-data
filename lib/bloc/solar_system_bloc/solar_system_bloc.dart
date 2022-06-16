@@ -10,8 +10,9 @@ part 'solar_system_state.dart';
 
 class SolarSystemBloc extends Bloc<SolarSystemEvent, SolarSystemState> {
   final SolarSystemRepository _solarSystemRepository = SolarSystemRepository();
+  final String? bodyUrl;
 
-  SolarSystemBloc() : super(SolarSystemLoading()) {
+  SolarSystemBloc({this.bodyUrl}) : super(SolarSystemLoading()) {
     on<LoadSolarSystem>(_onLoadSolarSystem);
     on<LoadPlanets>(_onLoadPlanets);
     on<LoadMoons>(_onLoadMoons);
@@ -19,6 +20,7 @@ class SolarSystemBloc extends Bloc<SolarSystemEvent, SolarSystemState> {
     on<LoadDwarfPlanets>(_onLoadDwarfPlanets);
     on<LoadAsteroids>(_onLoadAsteroids);
     on<LoadComets>(_onLoadComets);
+    on<LoadSingleBody>(_onLoadSingleBody);
   }
 
   Future<void> _onLoadSolarSystem(LoadSolarSystem event, Emitter<SolarSystemState> emit) async {
@@ -86,6 +88,16 @@ class SolarSystemBloc extends Bloc<SolarSystemEvent, SolarSystemState> {
     try {
       final comets = await _solarSystemRepository.getComets();
       emit(SolarSystemLoaded(comets));
+    } catch (e) {
+      emit(SolarSystemError(e.toString()));
+    }
+  }
+
+  Future<void> _onLoadSingleBody(LoadSingleBody event, Emitter<SolarSystemState> emit) async {
+    emit(SolarSystemLoading());
+    try {
+      final body = await _solarSystemRepository.getSingleBody(bodyUrl!);
+      emit(SingleBodyLoaded(body));
     } catch (e) {
       emit(SolarSystemError(e.toString()));
     }

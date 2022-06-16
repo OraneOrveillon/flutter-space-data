@@ -52,7 +52,10 @@ class SelectionMenu extends StatelessWidget {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Info(body: state.solarSystem.bodies[index]),
+                                builder: (context) => Info(
+                                  bodyEnglishName: state.solarSystem.bodies[index].englishName,
+                                  bodyUrl: state.solarSystem.bodies[index].rel!,
+                                ),
                               ),
                             ),
                             child: Center(
@@ -75,7 +78,10 @@ class SelectionMenu extends StatelessWidget {
             }
             if (state is SolarSystemError) {
               return Center(
-                child: Text(state.error.toString()),
+                child: Text(
+                  state.error.toString(),
+                  style: const TextStyle(color: MyColors.lightColor),
+                ),
               );
             }
             return Container();

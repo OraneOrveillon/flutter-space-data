@@ -17,6 +17,15 @@ class SolarSystemLoaded extends SolarSystemState {
   List<Object?> get props => [solarSystem];
 }
 
+class SingleBodyLoaded extends SolarSystemState {
+  final Body body;
+
+  SingleBodyLoaded(this.body);
+
+  @override
+  List<Object?> get props => [body];
+}
+
 class SolarSystemError extends SolarSystemState {
   final String error;
 

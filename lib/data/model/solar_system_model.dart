@@ -89,7 +89,7 @@ class Body {
   final double argPeriapsis;
   final double longAscNode;
   final BodyType bodyType;
-  final String rel;
+  final String? rel;
 
   factory Body.fromMap(Map<String, dynamic> json) => Body(
         id: json["id"],

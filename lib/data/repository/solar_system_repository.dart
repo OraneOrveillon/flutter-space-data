@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_space_data/data/model/solar_system_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +22,15 @@ class SolarSystemRepository {
   Future<SolarSystem> getDwarfPlanets() async => _getHttp(_dwarfPlanets);
   Future<SolarSystem> getAsteroids() async => _getHttp(_asteroids);
   Future<SolarSystem> getComets() async => _getHttp(_comets);
+
+  Future<Body> getSingleBody(String url) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      return Body.fromMap(json.decode(response.body));
+    } else {
+      throw Exception("Failed to load bodies");
+    }
+  }
 
   Future<SolarSystem> _getHttp(String url) async {
     final response = await http.get(Uri.parse(url));
