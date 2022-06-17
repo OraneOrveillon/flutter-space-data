@@ -154,49 +154,60 @@ class Info extends StatelessWidget {
                                           );
                                         }
                                         if (state is PicturesLoaded) {
-                                          return MyScrollbar(
-                                            child: GridView.builder(
-                                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 5,
-                                                childAspectRatio: 1,
-                                                mainAxisSpacing: 50,
-                                                crossAxisSpacing: 50,
-                                              ),
-                                              itemCount: state.pictures.collection!.items!.length,
-                                              itemBuilder: (context, index) {
-                                                return GestureDetector(
-                                                  onTap: () => Alert(
-                                                    context: context,
-                                                    closeIcon: const Icon(
-                                                      Icons.close,
-                                                      color: MyColors.lightColor,
-                                                    ),
-                                                    buttons: [],
-                                                    content: SizedBox(
-                                                      height: MediaQuery.of(context).size.height * 0.8,
-                                                      width: MediaQuery.of(context).size.width * 0.8,
-                                                      child: Image.network(
-                                                        state.pictures.collection!.items![index].links!.first.href!,
+                                          if (state.pictures.collection!.links != null) {
+                                            return MyScrollbar(
+                                              child: GridView.builder(
+                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 5,
+                                                  childAspectRatio: 1,
+                                                  mainAxisSpacing: 50,
+                                                  crossAxisSpacing: 50,
+                                                ),
+                                                itemCount: state.pictures.collection!.items!.length,
+                                                itemBuilder: (context, index) {
+                                                  return GestureDetector(
+                                                    onTap: () => Alert(
+                                                      context: context,
+                                                      closeIcon: const Icon(
+                                                        Icons.close,
+                                                        color: MyColors.lightColor,
                                                       ),
-                                                    ),
-                                                    style: AlertStyle(
-                                                      animationType: AnimationType.grow,
-                                                      backgroundColor: MyColors.darkColor,
-                                                      animationDuration: const Duration(milliseconds: 400),
-                                                      alertBorder: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                        side: const BorderSide(
-                                                          color: MyColors.lightColor,
+                                                      buttons: [],
+                                                      content: SizedBox(
+                                                        height: MediaQuery.of(context).size.height * 0.8,
+                                                        width: MediaQuery.of(context).size.width * 0.8,
+                                                        child: Image.network(
+                                                          state.pictures.collection!.items![index].links!.first.href!,
                                                         ),
                                                       ),
-                                                      alertAlignment: Alignment.center,
+                                                      style: AlertStyle(
+                                                        animationType: AnimationType.grow,
+                                                        backgroundColor: MyColors.darkColor,
+                                                        animationDuration: const Duration(milliseconds: 400),
+                                                        alertBorder: RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          side: const BorderSide(
+                                                            color: MyColors.lightColor,
+                                                          ),
+                                                        ),
+                                                        alertAlignment: Alignment.center,
+                                                      ),
+                                                    ).show(),
+                                                    child: Image.network(
+                                                      state.pictures.collection!.items![index].links!.first.href!,
                                                     ),
-                                                  ).show(),
-                                                  child: Image.network(
-                                                    state.pictures.collection!.items![index].links!.first.href!,
-                                                  ),
-                                                );
-                                              },
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          }
+                                          return const Center(
+                                            child: Text(
+                                              'No pictures found for this body',
+                                              style: TextStyle(
+                                                color: MyColors.lightColor,
+                                                fontSize: 30,
+                                              ),
                                             ),
                                           );
                                         }
