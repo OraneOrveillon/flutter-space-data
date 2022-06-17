@@ -139,7 +139,7 @@ class Info extends StatelessWidget {
                                     padding: EdgeInsets.fromLTRB(0, Paddings.large, 0, Paddings.large),
                                     child: Text(
                                       'Pictures :',
-                                      style: TextStyle(color: MyColors.lightColor, fontSize: 50, fontFamily: 'Autobus'),
+                                      style: TextStyle(color: MyColors.lightColor, fontSize: 50),
                                     ),
                                   ),
                                   Expanded(
