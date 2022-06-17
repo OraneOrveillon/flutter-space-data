@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../utils/constants.dart';
 
-class ErrorDisplay extends StatelessWidget {
-  const ErrorDisplay({Key? key}) : super(key: key);
+class CustomError extends StatelessWidget {
+  const CustomError({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

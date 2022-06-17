@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/solar_system_bloc/solar_system_bloc.dart';
 import '../utils/constants.dart';
 import 'components/cards.dart';
-import 'components/error.dart';
+import 'components/errors.dart';
+import 'components/progress_indicators.dart';
 import 'components/scrollbars.dart';
 import 'components/titles.dart';
 import 'info.dart';
@@ -27,11 +28,7 @@ class SelectionMenu extends StatelessWidget {
         child: BlocBuilder<SolarSystemBloc, SolarSystemState>(
           builder: (context, state) {
             if (state is SolarSystemLoading) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: MyColors.lightColor,
-                ),
-              );
+              return const CustomProgressIndicator();
             }
             if (state is SolarSystemLoaded) {
               return Column(
@@ -79,7 +76,7 @@ class SelectionMenu extends StatelessWidget {
               );
             }
             if (state is SolarSystemError) {
-              return const ErrorDisplay();
+              return const CustomError();
             }
             return Container();
           },

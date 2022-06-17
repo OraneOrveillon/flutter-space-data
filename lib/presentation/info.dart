@@ -9,7 +9,8 @@ import '../data/model/solar_system_model.dart';
 import '../utils/beautify_body_info.dart';
 import '../utils/constants.dart';
 import 'components/animated_texts.dart';
-import 'components/error.dart';
+import 'components/errors.dart';
+import 'components/progress_indicators.dart';
 import 'components/scrollbars.dart';
 import 'components/titles.dart';
 
@@ -34,9 +35,7 @@ class Info extends StatelessWidget {
         body: BlocBuilder<SolarSystemBloc, SolarSystemState>(
           builder: (context, state) {
             if (state is SolarSystemLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const CustomProgressIndicator();
             }
             if (state is SingleBodyLoaded) {
               List<String> bodyInfo = BeautifyBodyInfo(body: state.body).beautifiedBodyInfo;
@@ -147,11 +146,7 @@ class Info extends StatelessWidget {
                                     child: BlocBuilder<PicturesBloc, PicturesState>(
                                       builder: (context, state) {
                                         if (state is PicturesLoading) {
-                                          return const Center(
-                                            child: CircularProgressIndicator(
-                                              backgroundColor: MyColors.lightColor,
-                                            ),
-                                          );
+                                          return const CustomProgressIndicator();
                                         }
                                         if (state is PicturesLoaded) {
                                           if (state.pictures.collection!.links != null) {
@@ -212,7 +207,7 @@ class Info extends StatelessWidget {
                                           );
                                         }
                                         if (state is PicturesError) {
-                                          return const ErrorDisplay();
+                                          return const CustomError();
                                         }
                                         return Container();
                                       },
