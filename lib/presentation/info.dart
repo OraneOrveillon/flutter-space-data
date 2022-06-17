@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/bloc/pictures_bloc/pictures_bloc.dart';
-import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
-import 'package:flutter_space_data/data/model/solar_system_model.dart';
-import 'package:flutter_space_data/presentation/components/animated_texts.dart';
-import 'package:flutter_space_data/presentation/components/scrollbars.dart';
-import 'package:flutter_space_data/presentation/components/titles.dart';
-import 'package:flutter_space_data/utils/beautify_body_info.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
 import 'package:rflutter_alert/rflutter_alert.dart';
+
+import '../bloc/pictures_bloc/pictures_bloc.dart';
+import '../bloc/solar_system_bloc/solar_system_bloc.dart';
+import '../data/model/solar_system_model.dart';
+import '../utils/beautify_body_info.dart';
+import '../utils/constants.dart';
+import 'components/animated_texts.dart';
+import 'components/error.dart';
+import 'components/scrollbars.dart';
+import 'components/titles.dart';
 
 class Info extends StatelessWidget {
   Info({Key? key, required String bodyEnglishName, required String bodyUrl}) : super(key: key) {
@@ -198,12 +201,7 @@ class Info extends StatelessWidget {
                                           );
                                         }
                                         if (state is PicturesError) {
-                                          return Center(
-                                            child: Text(
-                                              state.error.toString(),
-                                              style: const TextStyle(color: MyColors.lightColor),
-                                            ),
-                                          );
+                                          return const ErrorDisplay();
                                         }
                                         return Container();
                                       },

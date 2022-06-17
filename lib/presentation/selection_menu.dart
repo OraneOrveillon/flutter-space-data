@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
-import 'package:flutter_space_data/presentation/components/scrollbars.dart';
-import 'package:flutter_space_data/presentation/info.dart';
-import 'package:flutter_space_data/presentation/components/cards.dart';
-import 'package:flutter_space_data/presentation/components/titles.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
+import '../bloc/solar_system_bloc/solar_system_bloc.dart';
+import '../utils/constants.dart';
+import 'components/cards.dart';
+import 'components/error.dart';
+import 'components/scrollbars.dart';
+import 'components/titles.dart';
+import 'info.dart';
 
 class SelectionMenu extends StatelessWidget {
   SelectionMenu({Key? key, required this.label, required this.event}) : super(key: key) {
@@ -77,12 +79,7 @@ class SelectionMenu extends StatelessWidget {
               );
             }
             if (state is SolarSystemError) {
-              return Center(
-                child: Text(
-                  state.error.toString(),
-                  style: const TextStyle(color: MyColors.lightColor),
-                ),
-              );
+              return const ErrorDisplay();
             }
             return Container();
           },

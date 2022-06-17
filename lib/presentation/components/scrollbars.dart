@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
+import '../../utils/constants.dart';
 
 class MyScrollbar extends StatelessWidget {
   const MyScrollbar({Key? key, required this.child}) : super(key: key);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_data/bloc/solar_system_bloc/solar_system_bloc.dart';
-import 'package:flutter_space_data/presentation/components/cards.dart';
-import 'package:flutter_space_data/presentation/selection_menu.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
+import '../bloc/solar_system_bloc/solar_system_bloc.dart';
+import '../utils/constants.dart';
+import 'components/cards.dart';
+import 'selection_menu.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);

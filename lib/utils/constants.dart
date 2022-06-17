@@ -5,6 +5,7 @@ abstract class MyColors {
   static const Color darkColor = Color(0xff020b10);
   static const Color accentColor = Color(0xff182631);
   static const Color accentColor2 = Color(0xff3E4A57);
+  static const Color errorColor = Color(0xff681b2b);
 }
 
 abstract class Paddings {

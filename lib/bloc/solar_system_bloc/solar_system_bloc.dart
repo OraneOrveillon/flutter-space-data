@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_space_data/data/model/solar_system_model.dart';
-import 'package:flutter_space_data/data/repository/solar_system_repository.dart';
+
+import '../../data/model/solar_system_model.dart';
+import '../../data/repository/solar_system_repository.dart';
 
 part 'solar_system_event.dart';
 part 'solar_system_state.dart';

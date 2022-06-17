@@ -1,7 +1,7 @@
 import 'dart:convert';
-
-import 'package:flutter_space_data/data/model/solar_system_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/solar_system_model.dart';
 
 class SolarSystemRepository {
   static const String _allBodies = "https://api.le-systeme-solaire.net/rest/bodies/";

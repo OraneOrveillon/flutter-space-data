@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
+import '../../utils/constants.dart';
 
 class TopTitle extends StatelessWidget {
   const TopTitle({Key? key, required this.label}) : super(key: key);

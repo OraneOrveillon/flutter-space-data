@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_space_data/utils/constants.dart';
+
+import '../../utils/constants.dart';
 
 class SelectionCard extends StatelessWidget {
   const SelectionCard({Key? key, required this.onTap, required this.child}) : super(key: key);

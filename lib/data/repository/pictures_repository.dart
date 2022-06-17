@@ -1,5 +1,6 @@
-import 'package:flutter_space_data/data/model/pictures_model.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/pictures_model.dart';
 
 class PicturesRepository {
   PicturesRepository({required this.bodyName});

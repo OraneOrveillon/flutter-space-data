@@ -1,4 +1,4 @@
-import 'package:flutter_space_data/data/model/solar_system_model.dart';
+import '../data/model/solar_system_model.dart';
 
 class BeautifyBodyInfo {
   final List<String> beautifiedBodyInfo = [];
