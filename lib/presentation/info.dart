@@ -44,20 +44,20 @@ class Info extends StatelessWidget {
                 children: [
                   TopTitle(label: state.body.englishName),
                   Expanded(
-                    child: Row(
-                      children: [
-                        Flexible(
-                          flex: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(Paddings.large, 0, Paddings.large, Paddings.large),
-                            child: SizedBox(
-                              height: double.infinity,
-                              width: double.infinity,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: MyColors.accentColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(Paddings.large, 0, Paddings.large, Paddings.large),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: MyColors.accentColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 3,
+                              child: SizedBox(
+                                height: double.infinity,
+                                width: double.infinity,
                                 child: Padding(
                                   padding: const EdgeInsets.all(Paddings.large),
                                   child: Column(
@@ -124,101 +124,102 @@ class Info extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 7,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: Paddings.large),
-                            child: Container(
-                              color: MyColors.darkColor,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.fromLTRB(0, Paddings.large, 0, Paddings.large),
-                                    child: Text(
-                                      'Pictures :',
-                                      style: TextStyle(color: MyColors.lightColor, fontSize: 50),
+                            Expanded(
+                              flex: 7,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, Paddings.large, Paddings.large),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.fromLTRB(0, Paddings.large, 0, Paddings.large),
+                                      child: Text(
+                                        'Pictures :',
+                                        style: TextStyle(color: MyColors.lightColor, fontSize: 50),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: BlocBuilder<PicturesBloc, PicturesState>(
-                                      builder: (context, state) {
-                                        if (state is PicturesLoading) {
-                                          return const CustomProgressIndicator();
-                                        }
-                                        if (state is PicturesLoaded) {
-                                          if (state.pictures.collection!.links != null) {
-                                            return MyScrollbar(
-                                              child: GridView.builder(
-                                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 5,
-                                                  childAspectRatio: 1,
-                                                  mainAxisSpacing: 50,
-                                                  crossAxisSpacing: 50,
-                                                ),
-                                                itemCount: state.pictures.collection!.items!.length,
-                                                itemBuilder: (context, index) {
-                                                  return GestureDetector(
-                                                    onTap: () => Alert(
-                                                      context: context,
-                                                      closeIcon: const Icon(
-                                                        Icons.close,
-                                                        color: MyColors.lightColor,
-                                                      ),
-                                                      buttons: [],
-                                                      content: SizedBox(
-                                                        height: MediaQuery.of(context).size.height * 0.8,
-                                                        width: MediaQuery.of(context).size.width * 0.8,
-                                                        child: Image.network(
-                                                          state.pictures.collection!.items![index].links!.first.href!,
+                                    Expanded(
+                                      child: BlocBuilder<PicturesBloc, PicturesState>(
+                                        builder: (context, state) {
+                                          if (state is PicturesLoading) {
+                                            return const CustomProgressIndicator();
+                                          }
+                                          if (state is PicturesLoaded) {
+                                            if (state.pictures.collection!.links != null) {
+                                              return MyScrollbar(
+                                                child: GridView.builder(
+                                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: 5,
+                                                    childAspectRatio: 1,
+                                                    mainAxisSpacing: Paddings.small,
+                                                    crossAxisSpacing: Paddings.small,
+                                                  ),
+                                                  itemCount: state.pictures.collection!.items!.length,
+                                                  itemBuilder: (context, index) {
+                                                    return InkWell(
+                                                      onTap: () => Alert(
+                                                        context: context,
+                                                        closeIcon: const Icon(
+                                                          Icons.close,
+                                                          color: MyColors.lightColor,
                                                         ),
-                                                      ),
-                                                      style: AlertStyle(
-                                                        animationType: AnimationType.grow,
-                                                        backgroundColor: MyColors.darkColor,
-                                                        animationDuration: const Duration(milliseconds: 400),
-                                                        alertBorder: RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          side: const BorderSide(
-                                                            color: MyColors.lightColor,
+                                                        buttons: [],
+                                                        content: SizedBox(
+                                                          height: MediaQuery.of(context).size.height * 0.8,
+                                                          width: MediaQuery.of(context).size.width * 0.8,
+                                                          child: Image.network(
+                                                            state.pictures.collection!.items![index].links!.first.href!,
                                                           ),
                                                         ),
-                                                        alertAlignment: Alignment.center,
+                                                        style: AlertStyle(
+                                                          animationType: AnimationType.grow,
+                                                          backgroundColor: MyColors.darkColor,
+                                                          animationDuration: const Duration(milliseconds: 400),
+                                                          alertBorder: RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.circular(20),
+                                                            side: const BorderSide(
+                                                              color: MyColors.lightColor,
+                                                            ),
+                                                          ),
+                                                          alertAlignment: Alignment.center,
+                                                        ),
+                                                      ).show(),
+                                                      child: ClipRRect(
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        child: Image.network(
+                                                          state.pictures.collection!.items![index].links!.first.href!,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
-                                                    ).show(),
-                                                    child: Image.network(
-                                                      state.pictures.collection!.items![index].links!.first.href!,
-                                                    ),
-                                                  );
-                                                },
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            }
+                                            return const Center(
+                                              child: Text(
+                                                'No pictures found for this body',
+                                                style: TextStyle(
+                                                  color: MyColors.lightColor,
+                                                  fontSize: 30,
+                                                ),
                                               ),
                                             );
                                           }
-                                          return const Center(
-                                            child: Text(
-                                              'No pictures found for this body',
-                                              style: TextStyle(
-                                                color: MyColors.lightColor,
-                                                fontSize: 30,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        if (state is PicturesError) {
-                                          return const CustomError();
-                                        }
-                                        return Container();
-                                      },
+                                          if (state is PicturesError) {
+                                            return const CustomError();
+                                          }
+                                          return Container();
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
