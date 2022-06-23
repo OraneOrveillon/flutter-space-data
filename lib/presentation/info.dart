@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../bloc/pictures_bloc/pictures_bloc.dart';
@@ -8,6 +7,7 @@ import '../bloc/solar_system_bloc/solar_system_bloc.dart';
 import '../data/model/solar_system_model.dart';
 import '../utils/beautify_body_info.dart';
 import '../utils/constants.dart';
+import '../utils/translator.dart';
 import 'components/animated_texts.dart';
 import 'components/errors.dart';
 import 'components/progress_indicators.dart';
@@ -84,25 +84,33 @@ class Info extends StatelessWidget {
                                                   List<Widget> chipMoons = [];
                                                   for (Moon moon in state.body.moons!) {
                                                     chipMoons.add(
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(Paddings.verySmall),
-                                                        child: ActionChip(
-                                                          labelStyle: const TextStyle(
-                                                            fontSize: 20,
-                                                            color: MyColors.darkColor,
-                                                          ),
-                                                          label: Text(moon.moon),
-                                                          backgroundColor: MyColors.lightColor,
-                                                          onPressed: () => Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder: (context) => Info(
-                                                                bodyEnglishName: moon.moon,
-                                                                bodyUrl: moon.rel,
+                                                      FutureBuilder(
+                                                        future: Translator().translate(moon.moon),
+                                                        builder: (context, snapshot) {
+                                                          if (snapshot.hasData) {
+                                                            return Padding(
+                                                              padding: const EdgeInsets.all(Paddings.verySmall),
+                                                              child: ActionChip(
+                                                                labelStyle: const TextStyle(
+                                                                  fontSize: 20,
+                                                                  color: MyColors.darkColor,
+                                                                ),
+                                                                label: Text(snapshot.data as String),
+                                                                backgroundColor: MyColors.lightColor,
+                                                                onPressed: () => Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                    builder: (context) => Info(
+                                                                      bodyEnglishName: snapshot.data as String,
+                                                                      bodyUrl: moon.rel,
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                        ),
+                                                            );
+                                                          }
+                                                          return const CustomProgressIndicator();
+                                                        },
                                                       ),
                                                     );
                                                   }
@@ -145,7 +153,7 @@ class Info extends StatelessWidget {
                                             return const CustomProgressIndicator();
                                           }
                                           if (state is PicturesLoaded) {
-                                            if (state.pictures.collection!.links != null) {
+                                            if (state.pictures.collection!.items!.isNotEmpty) {
                                               return MyScrollbar(
                                                 child: GridView.builder(
                                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
