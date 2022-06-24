@@ -70,61 +70,67 @@ class Info extends StatelessWidget {
                                       Expanded(
                                         child: Padding(
                                           padding: const EdgeInsets.only(top: Paddings.large),
-                                          child: ListView.separated(
-                                            separatorBuilder: (context, index) => const SizedBox(
-                                              height: Paddings.small,
-                                            ),
-                                            itemCount: bodyInfo.length,
-                                            controller: ScrollController(),
-                                            itemBuilder: (context, index) {
-                                              if (index != bodyInfo.length - 1) {
-                                                return TypingText(content: bodyInfo[index]);
-                                              } else {
-                                                if (state.body.moons != null) {
-                                                  List<Widget> chipMoons = [];
-                                                  for (Moon moon in state.body.moons!) {
-                                                    chipMoons.add(
-                                                      FutureBuilder(
-                                                        future: Translator().translate(moon.moon),
-                                                        builder: (context, snapshot) {
-                                                          if (snapshot.hasData) {
-                                                            return Padding(
-                                                              padding: const EdgeInsets.all(Paddings.verySmall),
-                                                              child: ActionChip(
-                                                                labelStyle: const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: MyColors.darkColor,
-                                                                ),
-                                                                label: Text(snapshot.data as String),
-                                                                backgroundColor: MyColors.lightColor,
-                                                                onPressed: () => Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) => Info(
-                                                                      bodyEnglishName: snapshot.data as String,
-                                                                      bodyUrl: moon.rel,
+                                          child: Builder(builder: (context) {
+                                            ScrollController scrollController = ScrollController();
+                                            return MyScrollbar(
+                                              scrollController: scrollController,
+                                              child: ListView.separated(
+                                                separatorBuilder: (context, index) => const SizedBox(
+                                                  height: Paddings.small,
+                                                ),
+                                                itemCount: bodyInfo.length,
+                                                controller: scrollController,
+                                                itemBuilder: (context, index) {
+                                                  if (index != bodyInfo.length - 1) {
+                                                    return TypingText(content: bodyInfo[index]);
+                                                  } else {
+                                                    if (state.body.moons != null) {
+                                                      List<Widget> chipMoons = [];
+                                                      for (Moon moon in state.body.moons!) {
+                                                        chipMoons.add(
+                                                          FutureBuilder(
+                                                            future: Translator().translate(moon.moon),
+                                                            builder: (context, snapshot) {
+                                                              if (snapshot.hasData) {
+                                                                return Padding(
+                                                                  padding: const EdgeInsets.all(Paddings.verySmall),
+                                                                  child: ActionChip(
+                                                                    labelStyle: const TextStyle(
+                                                                      fontSize: 20,
+                                                                      color: MyColors.darkColor,
+                                                                    ),
+                                                                    label: Text(snapshot.data as String),
+                                                                    backgroundColor: MyColors.lightColor,
+                                                                    onPressed: () => Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder: (context) => Info(
+                                                                          bodyEnglishName: snapshot.data as String,
+                                                                          bodyUrl: moon.rel,
+                                                                        ),
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }
-                                                          return const CustomProgressIndicator();
-                                                        },
-                                                      ),
-                                                    );
+                                                                );
+                                                              }
+                                                              return const CustomProgressIndicator();
+                                                            },
+                                                          ),
+                                                        );
+                                                      }
+                                                      return Wrap(
+                                                        children: [
+                                                          TypingText(content: bodyInfo[index]),
+                                                          ...chipMoons,
+                                                        ],
+                                                      );
+                                                    }
+                                                    return Container();
                                                   }
-                                                  return Wrap(
-                                                    children: [
-                                                      TypingText(content: bodyInfo[index]),
-                                                      ...chipMoons,
-                                                    ],
-                                                  );
-                                                }
-                                                return Container();
-                                              }
-                                            },
-                                          ),
+                                                },
+                                              ),
+                                            );
+                                          }),
                                         ),
                                       ),
                                     ],
@@ -153,8 +159,10 @@ class Info extends StatelessWidget {
                                             return const CustomProgressIndicator();
                                           }
                                           if (state is PicturesLoaded) {
+                                            ScrollController scrollController = ScrollController();
                                             if (state.pictures.collection!.items!.isNotEmpty) {
                                               return MyScrollbar(
+                                                scrollController: scrollController,
                                                 child: GridView.builder(
                                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 5,
@@ -162,6 +170,7 @@ class Info extends StatelessWidget {
                                                     mainAxisSpacing: Paddings.small,
                                                     crossAxisSpacing: Paddings.small,
                                                   ),
+                                                  controller: scrollController,
                                                   itemCount: state.pictures.collection!.items!.length,
                                                   itemBuilder: (context, index) {
                                                     return InkWell(

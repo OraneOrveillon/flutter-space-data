@@ -31,6 +31,7 @@ class SelectionMenu extends StatelessWidget {
               return const CustomProgressIndicator();
             }
             if (state is SolarSystemLoaded) {
+              ScrollController scrollController = ScrollController();
               return Column(
                 children: [
                   TopTitle(label: label),
@@ -38,6 +39,7 @@ class SelectionMenu extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 1.4,
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: MyScrollbar(
+                      scrollController: scrollController,
                       child: GridView.builder(
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 5,
@@ -45,6 +47,7 @@ class SelectionMenu extends StatelessWidget {
                           mainAxisSpacing: 50,
                           crossAxisSpacing: 50,
                         ),
+                        controller: scrollController,
                         itemCount: state.solarSystem.bodies.length,
                         itemBuilder: (context, index) {
                           return SelectionCard(
