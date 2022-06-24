@@ -12,7 +12,7 @@ class TypingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedTextKit(
       animatedTexts: [
-        TyperAnimatedText(content, textStyle: const TextStyle(color: MyColors.lightColor, fontSize: 25)),
+        TyperAnimatedText(content, textStyle: MyTextStyles.info),
       ],
       isRepeatingAnimation: false,
     );

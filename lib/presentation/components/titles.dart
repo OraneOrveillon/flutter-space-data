@@ -10,7 +10,7 @@ class TopTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(Paddings.veryLarge),
+      padding: const EdgeInsets.all(MyPaddings.veryLarge),
       child: Stack(
         children: [
           SizedBox(
@@ -19,7 +19,7 @@ class TopTitle extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 label,
-                style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
+                style: MyTextStyles.title,
               ),
             ),
           ),
@@ -27,7 +27,7 @@ class TopTitle extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 10,
             child: const FittedBox(
               child: BackButton(
-                color: MyColors.lightColor,
+                color: MyColors.light,
               ),
             ),
           ),

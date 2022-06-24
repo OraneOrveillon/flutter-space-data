@@ -9,7 +9,7 @@ class CustomProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SpinKitSpinningLines(
-      color: MyColors.lightColor,
+      color: MyColors.light,
     );
   }
 }

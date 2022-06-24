@@ -20,18 +20,18 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.darkColor,
+      backgroundColor: MyColors.dark,
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, Paddings.veryLarge, 0, Paddings.veryLarge),
+            padding: const EdgeInsets.fromLTRB(0, MyPaddings.veryLarge, 0, MyPaddings.veryLarge),
             child: SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height / 5,
               child: const FittedBox(
                 child: Text(
-                  "SPACE DATA",
-                  style: TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
+                  'SPACE DATA',
+                  style: MyTextStyles.title,
                 ),
               ),
             ),
@@ -60,21 +60,20 @@ class Menu extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(Paddings.small),
+                    padding: const EdgeInsets.all(MyPaddings.small),
                     child: Column(
                       children: [
                         Expanded(
-                          child:
-                              Image.asset("assets/images/${buttons[index]['asset']!}.png", color: MyColors.lightColor),
+                          child: Image.asset("assets/images/${buttons[index]['asset']!}.png", color: MyColors.light),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: Paddings.large),
+                          padding: const EdgeInsets.only(top: MyPaddings.large),
                           child: SizedBox(
                             height: MediaQuery.of(context).size.height / 30,
                             child: FittedBox(
                               child: Text(
                                 buttons[index]['label']!,
-                                style: const TextStyle(color: MyColors.lightColor, fontFamily: 'Doctor Glitch'),
+                                style: MyTextStyles.title,
                               ),
                             ),
                           ),

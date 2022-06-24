@@ -11,8 +11,8 @@ class MyScrollbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawScrollbar(
-      thumbColor: MyColors.lightColor,
-      radius: const Radius.circular(20),
+      thumbColor: MyColors.light,
+      radius: const Radius.circular(MyBorderRadius.normal),
       thickness: 7,
       controller: scrollController,
       child: child,

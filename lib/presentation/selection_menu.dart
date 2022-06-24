@@ -22,7 +22,7 @@ class SelectionMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.darkColor,
+      backgroundColor: MyColors.dark,
       body: BlocProvider(
         create: (context) => _solarSystemBloc,
         child: BlocBuilder<SolarSystemBloc, SolarSystemState>(
@@ -63,10 +63,7 @@ class SelectionMenu extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 state.solarSystem.bodies[index].englishName,
-                                style: const TextStyle(
-                                  color: MyColors.lightColor,
-                                  fontSize: 40,
-                                ),
+                                style: MyTextStyles.selectionMenuCard,
                                 textAlign: TextAlign.center,
                               ),
                             ),

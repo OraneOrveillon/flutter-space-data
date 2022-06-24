@@ -10,10 +10,7 @@ class CustomError extends StatelessWidget {
     return const Center(
       child: Text(
         'Something went wrong.',
-        style: TextStyle(
-          color: MyColors.errorColor,
-          fontSize: 20,
-        ),
+        style: MyTextStyles.error,
       ),
     );
   }

@@ -31,7 +31,7 @@ class Info extends StatelessWidget {
         BlocProvider(create: (context) => _picturesBloc),
       ],
       child: Scaffold(
-        backgroundColor: MyColors.darkColor,
+        backgroundColor: MyColors.dark,
         body: BlocBuilder<SolarSystemBloc, SolarSystemState>(
           builder: (context, state) {
             if (state is SolarSystemLoading) {
@@ -45,11 +45,11 @@ class Info extends StatelessWidget {
                   TopTitle(label: state.body.englishName),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(Paddings.large, 0, Paddings.large, Paddings.large),
+                      padding: const EdgeInsets.fromLTRB(MyPaddings.large, 0, MyPaddings.large, MyPaddings.large),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: MyColors.accentColor,
-                          borderRadius: BorderRadius.circular(10),
+                          color: MyColors.accent,
+                          borderRadius: BorderRadius.circular(MyBorderRadius.normal),
                         ),
                         child: Row(
                           children: [
@@ -59,24 +59,24 @@ class Info extends StatelessWidget {
                                 height: double.infinity,
                                 width: double.infinity,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(Paddings.large),
+                                  padding: const EdgeInsets.all(MyPaddings.large),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         'Information :',
-                                        style: TextStyle(color: MyColors.lightColor, fontSize: 50),
+                                        style: MyTextStyles.sectionTitle,
                                       ),
                                       Expanded(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(top: Paddings.large),
+                                          padding: const EdgeInsets.only(top: MyPaddings.large),
                                           child: Builder(builder: (context) {
                                             ScrollController scrollController = ScrollController();
                                             return MyScrollbar(
                                               scrollController: scrollController,
                                               child: ListView.separated(
                                                 separatorBuilder: (context, index) => const SizedBox(
-                                                  height: Paddings.small,
+                                                  height: MyPaddings.small,
                                                 ),
                                                 itemCount: bodyInfo.length,
                                                 controller: scrollController,
@@ -93,14 +93,11 @@ class Info extends StatelessWidget {
                                                             builder: (context, snapshot) {
                                                               if (snapshot.hasData) {
                                                                 return Padding(
-                                                                  padding: const EdgeInsets.all(Paddings.verySmall),
+                                                                  padding: const EdgeInsets.all(MyPaddings.verySmall),
                                                                   child: ActionChip(
-                                                                    labelStyle: const TextStyle(
-                                                                      fontSize: 20,
-                                                                      color: MyColors.darkColor,
-                                                                    ),
+                                                                    labelStyle: MyTextStyles.chip,
                                                                     label: Text(snapshot.data as String),
-                                                                    backgroundColor: MyColors.lightColor,
+                                                                    backgroundColor: MyColors.light,
                                                                     onPressed: () => Navigator.push(
                                                                       context,
                                                                       MaterialPageRoute(
@@ -141,15 +138,15 @@ class Info extends StatelessWidget {
                             Expanded(
                               flex: 7,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, Paddings.large, Paddings.large),
+                                padding: const EdgeInsets.fromLTRB(0, 0, MyPaddings.large, MyPaddings.large),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Padding(
-                                      padding: EdgeInsets.fromLTRB(0, Paddings.large, 0, Paddings.large),
+                                      padding: EdgeInsets.fromLTRB(0, MyPaddings.large, 0, MyPaddings.large),
                                       child: Text(
                                         'Pictures :',
-                                        style: TextStyle(color: MyColors.lightColor, fontSize: 50),
+                                        style: MyTextStyles.sectionTitle,
                                       ),
                                     ),
                                     Expanded(
@@ -167,8 +164,8 @@ class Info extends StatelessWidget {
                                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 5,
                                                     childAspectRatio: 1,
-                                                    mainAxisSpacing: Paddings.small,
-                                                    crossAxisSpacing: Paddings.small,
+                                                    mainAxisSpacing: MyPaddings.small,
+                                                    crossAxisSpacing: MyPaddings.small,
                                                   ),
                                                   controller: scrollController,
                                                   itemCount: state.pictures.collection!.items!.length,
@@ -178,7 +175,7 @@ class Info extends StatelessWidget {
                                                         context: context,
                                                         closeIcon: const Icon(
                                                           Icons.close,
-                                                          color: MyColors.lightColor,
+                                                          color: MyColors.light,
                                                         ),
                                                         buttons: [],
                                                         content: SizedBox(
@@ -190,19 +187,19 @@ class Info extends StatelessWidget {
                                                         ),
                                                         style: AlertStyle(
                                                           animationType: AnimationType.grow,
-                                                          backgroundColor: MyColors.darkColor,
+                                                          backgroundColor: MyColors.dark,
                                                           animationDuration: const Duration(milliseconds: 400),
                                                           alertBorder: RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(20),
+                                                            borderRadius: BorderRadius.circular(MyBorderRadius.normal),
                                                             side: const BorderSide(
-                                                              color: MyColors.lightColor,
+                                                              color: MyColors.light,
                                                             ),
                                                           ),
                                                           alertAlignment: Alignment.center,
                                                         ),
                                                       ).show(),
                                                       child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(20),
+                                                        borderRadius: BorderRadius.circular(MyBorderRadius.normal),
                                                         child: Image.network(
                                                           state.pictures.collection!.items![index].links!.first.href!,
                                                           fit: BoxFit.cover,
@@ -216,10 +213,7 @@ class Info extends StatelessWidget {
                                             return const Center(
                                               child: Text(
                                                 'No pictures found for this body',
-                                                style: TextStyle(
-                                                  color: MyColors.lightColor,
-                                                  fontSize: 30,
-                                                ),
+                                                style: MyTextStyles.info,
                                               ),
                                             );
                                           }
@@ -243,12 +237,7 @@ class Info extends StatelessWidget {
               );
             }
             if (state is SolarSystemError) {
-              return Center(
-                child: Text(
-                  state.error.toString(),
-                  style: const TextStyle(color: MyColors.lightColor),
-                ),
-              );
+              const CustomError();
             }
             return Container();
           },
