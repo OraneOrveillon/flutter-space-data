@@ -166,17 +166,18 @@ class Info extends StatelessWidget {
                                                     context: context,
                                                     icon: Icons.arrow_back,
                                                     tooltip: 'Previous page',
-                                                    onPressed:
-                                                        (picturesState.pictures.collection!.links!.first.rel == 'prev')
-                                                            ? () {
-                                                                context.read<PicturesBloc>().add(
-                                                                      LoadPicturesWithPage(
-                                                                        url: picturesState
-                                                                            .pictures.collection!.links!.first.href!,
-                                                                      ),
-                                                                    );
-                                                              }
-                                                            : null,
+                                                    onPressed: (picturesState.pictures.collection!.links != null &&
+                                                            picturesState.pictures.collection!.links!.first.rel ==
+                                                                'prev')
+                                                        ? () {
+                                                            context.read<PicturesBloc>().add(
+                                                                  LoadPicturesWithPage(
+                                                                    url: picturesState
+                                                                        .pictures.collection!.links!.first.href!,
+                                                                  ),
+                                                                );
+                                                          }
+                                                        : null,
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets.fromLTRB(
@@ -195,17 +196,18 @@ class Info extends StatelessWidget {
                                                     context: context,
                                                     icon: Icons.arrow_forward,
                                                     tooltip: 'Next page',
-                                                    onPressed:
-                                                        (picturesState.pictures.collection!.links!.last.rel == 'next')
-                                                            ? () {
-                                                                context.read<PicturesBloc>().add(
-                                                                      LoadPicturesWithPage(
-                                                                        url: picturesState
-                                                                            .pictures.collection!.links!.last.href!,
-                                                                      ),
-                                                                    );
-                                                              }
-                                                            : null,
+                                                    onPressed: (picturesState.pictures.collection!.links != null &&
+                                                            picturesState.pictures.collection!.links!.last.rel ==
+                                                                'next')
+                                                        ? () {
+                                                            context.read<PicturesBloc>().add(
+                                                                  LoadPicturesWithPage(
+                                                                    url: picturesState
+                                                                        .pictures.collection!.links!.last.href!,
+                                                                  ),
+                                                                );
+                                                          }
+                                                        : null,
                                                   ),
                                                   const SizedBox(
                                                     width: MyPaddings.small,
@@ -315,6 +317,7 @@ class Info extends StatelessWidget {
       disabledColor: Colors.red,
       onPressed: onPressed,
       tooltip: tooltip,
+      padding: const EdgeInsets.all(0),
       icon: Icon(
         icon,
         color: MyColors.light,
