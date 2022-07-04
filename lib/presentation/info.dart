@@ -314,13 +314,12 @@ class Info extends StatelessWidget {
     required Function()? onPressed,
   }) {
     return IconButton(
-      disabledColor: Colors.red,
       onPressed: onPressed,
       tooltip: tooltip,
       padding: const EdgeInsets.all(0),
       icon: Icon(
         icon,
-        color: MyColors.light,
+        color: onPressed != null ? MyColors.light : MyColors.accent2,
         size: 30,
       ),
     );
