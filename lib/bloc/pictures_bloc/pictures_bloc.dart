@@ -27,6 +27,7 @@ class PicturesBloc extends Bloc<PicturesEvent, PicturesState> {
   }
 
   Future<void> _getPictures(PicturesEvent event, Emitter<PicturesState> emit) async {
+    emit(PicturesLoading());
     try {
       final pictures = await _picturesRepository.getPictures();
       emit(PicturesLoaded(pictures));

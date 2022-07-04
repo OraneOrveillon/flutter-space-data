@@ -33,16 +33,16 @@ class Info extends StatelessWidget {
       child: Scaffold(
         backgroundColor: MyColors.dark,
         body: BlocBuilder<SolarSystemBloc, SolarSystemState>(
-          builder: (context, state) {
-            if (state is SolarSystemLoading) {
+          builder: (context, solarSystemState) {
+            if (solarSystemState is SolarSystemLoading) {
               return const CustomProgressIndicator();
             }
-            if (state is SingleBodyLoaded) {
-              List<String> bodyInfo = BeautifyBodyInfo(body: state.body).beautifiedBodyInfo;
+            if (solarSystemState is SingleBodyLoaded) {
+              List<String> bodyInfo = BeautifyBodyInfo(body: solarSystemState.body).beautifiedBodyInfo;
 
               return Column(
                 children: [
-                  TopTitle(label: state.body.englishName),
+                  TopTitle(label: solarSystemState.body.englishName),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(MyPaddings.large, 0, MyPaddings.large, MyPaddings.large),
@@ -84,9 +84,9 @@ class Info extends StatelessWidget {
                                                   if (index != bodyInfo.length - 1) {
                                                     return TypingText(content: bodyInfo[index]);
                                                   } else {
-                                                    if (state.body.moons != null) {
+                                                    if (solarSystemState.body.moons != null) {
                                                       List<Widget> chipMoons = [];
-                                                      for (Moon moon in state.body.moons!) {
+                                                      for (Moon moon in solarSystemState.body.moons!) {
                                                         chipMoons.add(
                                                           FutureBuilder(
                                                             future: Translator().translate(moon.moon),
@@ -140,13 +140,13 @@ class Info extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, MyPaddings.large, MyPaddings.large),
                                 child: BlocBuilder<PicturesBloc, PicturesState>(
-                                  builder: (context, state) {
-                                    if (state is PicturesLoading) {
+                                  builder: (context, picturesState) {
+                                    if (picturesState is PicturesLoading) {
                                       return const CustomProgressIndicator();
                                     }
-                                    if (state is PicturesLoaded) {
+                                    if (picturesState is PicturesLoaded) {
                                       ScrollController scrollController = ScrollController();
-                                      if (state.pictures.collection!.items!.isNotEmpty) {
+                                      if (picturesState.pictures.collection!.items!.isNotEmpty) {
                                         return Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -162,28 +162,50 @@ class Info extends StatelessWidget {
                                                     ),
                                                   ),
                                                   _buildIconButton(
-                                                      state: state,
-                                                      context: context,
-                                                      icon: Icons.arrow_back,
-                                                      onPressed: () {}),
-                                                  // TODO N°page
-                                                  const SizedBox(
-                                                    width: MyPaddings.small,
+                                                    state: picturesState,
+                                                    context: context,
+                                                    icon: Icons.arrow_back,
+                                                    tooltip: 'Previous page',
+                                                    onPressed:
+                                                        (picturesState.pictures.collection!.links!.first.rel == 'prev')
+                                                            ? () {
+                                                                context.read<PicturesBloc>().add(
+                                                                      LoadPicturesWithPage(
+                                                                        url: picturesState
+                                                                            .pictures.collection!.links!.first.href!,
+                                                                      ),
+                                                                    );
+                                                              }
+                                                            : null,
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                      MyPaddings.small,
+                                                      0,
+                                                      MyPaddings.small,
+                                                      0,
+                                                    ),
+                                                    child: Text(
+                                                      'Page ${picturesState.pictures.collection!.href.substring(picturesState.pictures.collection!.href.length - 1)}',
+                                                      style: MyTextStyles.info,
+                                                    ),
                                                   ),
                                                   _buildIconButton(
-                                                    state: state,
+                                                    state: picturesState,
                                                     context: context,
                                                     icon: Icons.arrow_forward,
-                                                    onPressed: () {
-                                                      if (state.pictures.collection!.links!.first.rel == 'next') {
-                                                        // TODO : Marche pour le premier seulement
-                                                        context.read<PicturesBloc>().add(
-                                                              LoadPicturesWithPage(
-                                                                url: state.pictures.collection!.links!.first.href!,
-                                                              ),
-                                                            );
-                                                      }
-                                                    },
+                                                    tooltip: 'Next page',
+                                                    onPressed:
+                                                        (picturesState.pictures.collection!.links!.last.rel == 'next')
+                                                            ? () {
+                                                                context.read<PicturesBloc>().add(
+                                                                      LoadPicturesWithPage(
+                                                                        url: picturesState
+                                                                            .pictures.collection!.links!.last.href!,
+                                                                      ),
+                                                                    );
+                                                              }
+                                                            : null,
                                                   ),
                                                   const SizedBox(
                                                     width: MyPaddings.small,
@@ -202,7 +224,7 @@ class Info extends StatelessWidget {
                                                     crossAxisSpacing: MyPaddings.small,
                                                   ),
                                                   controller: scrollController,
-                                                  itemCount: state.pictures.collection!.items!.length,
+                                                  itemCount: picturesState.pictures.collection!.items!.length,
                                                   itemBuilder: (context, index) {
                                                     return InkWell(
                                                       onTap: () => Alert(
@@ -216,7 +238,8 @@ class Info extends StatelessWidget {
                                                           height: MediaQuery.of(context).size.height * 0.8,
                                                           width: MediaQuery.of(context).size.width * 0.8,
                                                           child: Image.network(
-                                                            state.pictures.collection!.items![index].links!.first.href!,
+                                                            picturesState
+                                                                .pictures.collection!.items![index].links!.first.href!,
                                                           ),
                                                         ),
                                                         style: AlertStyle(
@@ -235,7 +258,8 @@ class Info extends StatelessWidget {
                                                       child: ClipRRect(
                                                         borderRadius: BorderRadius.circular(MyBorderRadius.normal),
                                                         child: Image.network(
-                                                          state.pictures.collection!.items![index].links!.first.href!,
+                                                          picturesState
+                                                              .pictures.collection!.items![index].links!.first.href!,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
@@ -254,7 +278,7 @@ class Info extends StatelessWidget {
                                         ),
                                       );
                                     }
-                                    if (state is PicturesError) {
+                                    if (picturesState is PicturesError) {
                                       return const CustomError();
                                     }
                                     return Container();
@@ -270,7 +294,7 @@ class Info extends StatelessWidget {
                 ],
               );
             }
-            if (state is SolarSystemError) {
+            if (solarSystemState is SolarSystemError) {
               const CustomError();
             }
             return Container();
@@ -284,10 +308,13 @@ class Info extends StatelessWidget {
     required PicturesLoaded state,
     required BuildContext context,
     required IconData icon,
-    required Function() onPressed,
+    required String tooltip,
+    required Function()? onPressed,
   }) {
     return IconButton(
+      disabledColor: Colors.red,
       onPressed: onPressed,
+      tooltip: tooltip,
       icon: Icon(
         icon,
         color: MyColors.light,
