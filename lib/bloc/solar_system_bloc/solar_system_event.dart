@@ -22,4 +22,11 @@ class LoadAsteroids extends SolarSystemEvent {}
 
 class LoadComets extends SolarSystemEvent {}
 
-class LoadSingleBody extends SolarSystemEvent {}
+class LoadSingleBody extends SolarSystemEvent {
+  final String bodyUrl;
+
+  const LoadSingleBody({required this.bodyUrl});
+
+  @override
+  List<Object> get props => [bodyUrl];
+}

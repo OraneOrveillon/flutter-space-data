@@ -9,19 +9,29 @@ part 'pictures_event.dart';
 part 'pictures_state.dart';
 
 class PicturesBloc extends Bloc<PicturesEvent, PicturesState> {
-  late final PicturesRepository _picturesRepository;
-  final String bodyName;
+  late PicturesRepository _picturesRepository;
 
-  PicturesBloc({required this.bodyName}) : super(PicturesLoading()) {
-    _picturesRepository = PicturesRepository(bodyName: bodyName);
-    on<LoadPictures>((event, emit) async {
-      emit(PicturesLoading());
-      try {
-        final pictures = await _picturesRepository.getPictures();
-        emit(PicturesLoaded(pictures));
-      } catch (e) {
-        emit(PicturesError(e.toString()));
-      }
-    });
+  PicturesBloc() : super(PicturesLoading()) {
+    on<LoadPictures>(_onLoadPictures);
+    on<LoadPicturesWithPage>(_onLoadPicturesWithPage);
+  }
+
+  Future<void> _onLoadPictures(LoadPictures event, Emitter<PicturesState> emit) async {
+    _picturesRepository = PicturesRepository(bodyName: event.bodyName);
+    return _getPictures(event, emit);
+  }
+
+  Future<void> _onLoadPicturesWithPage(LoadPicturesWithPage event, Emitter<PicturesState> emit) async {
+    _picturesRepository = PicturesRepository(url: event.url);
+    return _getPictures(event, emit);
+  }
+
+  Future<void> _getPictures(PicturesEvent event, Emitter<PicturesState> emit) async {
+    try {
+      final pictures = await _picturesRepository.getPictures();
+      emit(PicturesLoaded(pictures));
+    } catch (e) {
+      emit(PicturesError(e.toString()));
+    }
   }
 }

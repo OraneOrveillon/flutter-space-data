@@ -16,8 +16,8 @@ import 'components/titles.dart';
 
 class Info extends StatelessWidget {
   Info({Key? key, required String bodyEnglishName, required String bodyUrl}) : super(key: key) {
-    _singleBodyBloc = SolarSystemBloc(bodyUrl: bodyUrl)..add(LoadSingleBody());
-    _picturesBloc = PicturesBloc(bodyName: bodyEnglishName)..add(LoadPictures());
+    _singleBodyBloc = SolarSystemBloc()..add(LoadSingleBody(bodyUrl: bodyUrl));
+    _picturesBloc = PicturesBloc()..add(LoadPictures(bodyName: bodyEnglishName));
   }
 
   late final SolarSystemBloc _singleBodyBloc;
@@ -135,30 +135,64 @@ class Info extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Expanded(
+                            Flexible(
                               flex: 7,
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, MyPaddings.large, MyPaddings.large),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.fromLTRB(0, MyPaddings.large, 0, MyPaddings.large),
-                                      child: Text(
-                                        'Pictures :',
-                                        style: MyTextStyles.sectionTitle,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: BlocBuilder<PicturesBloc, PicturesState>(
-                                        builder: (context, state) {
-                                          if (state is PicturesLoading) {
-                                            return const CustomProgressIndicator();
-                                          }
-                                          if (state is PicturesLoaded) {
-                                            ScrollController scrollController = ScrollController();
-                                            if (state.pictures.collection!.items!.isNotEmpty) {
-                                              return MyScrollbar(
+                                child: BlocBuilder<PicturesBloc, PicturesState>(
+                                  builder: (context, state) {
+                                    if (state is PicturesLoading) {
+                                      return const CustomProgressIndicator();
+                                    }
+                                    if (state is PicturesLoaded) {
+                                      ScrollController scrollController = ScrollController();
+                                      if (state.pictures.collection!.items!.isNotEmpty) {
+                                        return Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(0, MyPaddings.large, 0, MyPaddings.large),
+                                              child: Row(
+                                                children: [
+                                                  const Expanded(
+                                                    child: Text(
+                                                      'Pictures :',
+                                                      style: MyTextStyles.sectionTitle,
+                                                    ),
+                                                  ),
+                                                  _buildIconButton(
+                                                      state: state,
+                                                      context: context,
+                                                      icon: Icons.arrow_back,
+                                                      onPressed: () {}),
+                                                  // TODO N°page
+                                                  const SizedBox(
+                                                    width: MyPaddings.small,
+                                                  ),
+                                                  _buildIconButton(
+                                                    state: state,
+                                                    context: context,
+                                                    icon: Icons.arrow_forward,
+                                                    onPressed: () {
+                                                      if (state.pictures.collection!.links!.first.rel == 'next') {
+                                                        // TODO : Marche pour le premier seulement
+                                                        context.read<PicturesBloc>().add(
+                                                              LoadPicturesWithPage(
+                                                                url: state.pictures.collection!.links!.first.href!,
+                                                              ),
+                                                            );
+                                                      }
+                                                    },
+                                                  ),
+                                                  const SizedBox(
+                                                    width: MyPaddings.small,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: MyScrollbar(
                                                 scrollController: scrollController,
                                                 child: GridView.builder(
                                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -181,11 +215,8 @@ class Info extends StatelessWidget {
                                                         content: SizedBox(
                                                           height: MediaQuery.of(context).size.height * 0.8,
                                                           width: MediaQuery.of(context).size.width * 0.8,
-                                                          child: InteractiveViewer(
-                                                            child: Image.network(
-                                                              state.pictures.collection!.items![index].links!.first
-                                                                  .href!,
-                                                            ),
+                                                          child: Image.network(
+                                                            state.pictures.collection!.items![index].links!.first.href!,
                                                           ),
                                                         ),
                                                         style: AlertStyle(
@@ -211,23 +242,23 @@ class Info extends StatelessWidget {
                                                     );
                                                   },
                                                 ),
-                                              );
-                                            }
-                                            return const Center(
-                                              child: Text(
-                                                'No pictures found for this body',
-                                                style: MyTextStyles.info,
                                               ),
-                                            );
-                                          }
-                                          if (state is PicturesError) {
-                                            return const CustomError();
-                                          }
-                                          return Container();
-                                        },
-                                      ),
-                                    ),
-                                  ],
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                      return const Center(
+                                        child: Text(
+                                          'No pictures found for this body',
+                                          style: MyTextStyles.info,
+                                        ),
+                                      );
+                                    }
+                                    if (state is PicturesError) {
+                                      return const CustomError();
+                                    }
+                                    return Container();
+                                  },
                                 ),
                               ),
                             ),
@@ -245,6 +276,22 @@ class Info extends StatelessWidget {
             return Container();
           },
         ),
+      ),
+    );
+  }
+
+  IconButton _buildIconButton({
+    required PicturesLoaded state,
+    required BuildContext context,
+    required IconData icon,
+    required Function() onPressed,
+  }) {
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+        icon,
+        color: MyColors.light,
+        size: 30,
       ),
     );
   }
