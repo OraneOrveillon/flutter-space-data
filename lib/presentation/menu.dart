@@ -24,13 +24,13 @@ class Menu extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, MyPaddings.veryLarge, 0, MyPaddings.veryLarge),
+            padding: const EdgeInsets.all(MyPaddings.veryLarge),
             child: SizedBox(
               width: double.infinity,
               height: MediaQuery.of(context).size.height / 5,
               child: const FittedBox(
                 child: Text(
-                  'SPACE DATA',
+                  'SOLAR SYSTEM DATA',
                   style: MyTextStyles.title,
                 ),
               ),
