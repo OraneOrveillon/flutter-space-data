@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_space_data/data/model/solar_system_model.dart';
 
 import '../bloc/solar_system_bloc/solar_system_bloc.dart';
 import '../utils/constants.dart';
@@ -55,7 +56,10 @@ class SelectionMenu extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Info(
-                                  bodyEnglishName: state.solarSystem.bodies[index].englishName,
+                                  // Enables to remove the number before the english name of asteroids for a better query
+                                  bodyEnglishName: state.solarSystem.bodies[index].bodyType == BodyType.asteroid
+                                      ? state.solarSystem.bodies[index].englishName.split(' ').last
+                                      : state.solarSystem.bodies[index].englishName,
                                   bodyUrl: state.solarSystem.bodies[index].rel!,
                                 ),
                               ),

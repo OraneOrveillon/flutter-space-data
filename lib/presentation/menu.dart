@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../bloc/solar_system_bloc/solar_system_bloc.dart';
 import '../utils/constants.dart';
 import 'components/cards.dart';
+import 'info.dart';
 import 'selection_menu.dart';
 
 class Menu extends StatelessWidget {
@@ -11,7 +12,7 @@ class Menu extends StatelessWidget {
   static List<Map<String, dynamic>> buttons = [
     {'label': 'PLANETS', 'asset': 'planet', 'event': LoadPlanets()},
     {'label': 'MOONS', 'asset': 'moon', 'event': LoadMoons()},
-    {'label': 'SUN', 'asset': 'sun', 'event': LoadSun()},
+    {'label': 'SUN', 'asset': 'sun'},
     {'label': 'DWARF PLANETS', 'asset': 'dwarf-planet', 'event': LoadDwarfPlanets()},
     {'label': 'ASTEROIDS', 'asset': 'asteroid', 'event': LoadAsteroids()},
     {'label': 'COMETS', 'asset': 'comet', 'event': LoadComets()},
@@ -50,15 +51,30 @@ class Menu extends StatelessWidget {
               itemCount: buttons.length,
               itemBuilder: (BuildContext context, int index) {
                 return SelectionCard(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SelectionMenu(
-                        label: buttons[index]['label'],
-                        event: buttons[index]['event'],
-                      ),
-                    ),
-                  ),
+                  onTap: () {
+                    // Loads directly the Info page for the Sun
+                    if (buttons[index]['label'] == 'SUN') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Info(
+                            bodyEnglishName: buttons[index]['label'],
+                            bodyUrl: 'https://api.le-systeme-solaire.net/rest/bodies/sun',
+                          ),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SelectionMenu(
+                            label: buttons[index]['label'],
+                            event: buttons[index]['event'],
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(MyPaddings.small),
                     child: Column(
