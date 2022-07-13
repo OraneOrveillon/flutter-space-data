@@ -9,10 +9,10 @@ import 'components/errors.dart';
 import 'components/progress_indicators.dart';
 import 'components/scrollbars.dart';
 import 'components/titles.dart';
-import 'info.dart';
+import 'info/info_page.dart';
 
-class SelectionMenu extends StatelessWidget {
-  SelectionMenu({Key? key, required this.label, required this.event}) : super(key: key) {
+class SelectionMenuPage extends StatelessWidget {
+  SelectionMenuPage({Key? key, required this.label, required this.event}) : super(key: key) {
     _solarSystemBloc.add(event);
   }
 
@@ -55,7 +55,7 @@ class SelectionMenu extends StatelessWidget {
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Info(
+                                builder: (context) => InfoPage(
                                   // Enables to remove the number before the english name of asteroids for a better query
                                   bodyEnglishName: state.solarSystem.bodies[index].bodyType == BodyType.asteroid
                                       ? state.solarSystem.bodies[index].englishName.split(' ').last

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../bloc/solar_system_bloc/solar_system_bloc.dart';
 import '../utils/constants.dart';
 import 'components/cards.dart';
-import 'info.dart';
-import 'selection_menu.dart';
+import 'info/info_page.dart';
+import 'selection_menu_page.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class MenuPage extends StatelessWidget {
+  const MenuPage({Key? key}) : super(key: key);
 
   static List<Map<String, dynamic>> buttons = [
     {'label': 'PLANETS', 'asset': 'planet', 'event': LoadPlanets()},
@@ -57,7 +57,7 @@ class Menu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Info(
+                          builder: (context) => InfoPage(
                             bodyEnglishName: buttons[index]['label'],
                             bodyUrl: 'https://api.le-systeme-solaire.net/rest/bodies/sun',
                           ),
@@ -67,7 +67,7 @@ class Menu extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SelectionMenu(
+                          builder: (context) => SelectionMenuPage(
                             label: buttons[index]['label'],
                             event: buttons[index]['event'],
                           ),

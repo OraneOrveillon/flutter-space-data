@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/menu.dart';
+import 'presentation/menu_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Autobus',
       ),
       title: 'Solar System Data',
-      home: const Menu(),
+      home: const MenuPage(),
     );
   }
 }

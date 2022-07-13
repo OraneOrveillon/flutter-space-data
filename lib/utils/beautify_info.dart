@@ -1,3 +1,4 @@
+import '../data/model/pictures_model.dart';
 import '../data/model/solar_system_model.dart';
 
 class BeautifyBodyInfo {
@@ -70,6 +71,35 @@ class BeautifyBodyInfo {
     }
     if (body.moons != null) {
       beautifiedBodyInfo.add('Moons : ');
+    }
+  }
+}
+
+class BeautifyPictureInfo {
+  final List<String> beautifiedPictureInfo = [];
+  final Datum pictureData;
+
+  BeautifyPictureInfo({required this.pictureData}) {
+    if (pictureData.title != null) {
+      beautifiedPictureInfo.add('Title : ${pictureData.title}');
+    }
+    if (pictureData.dateCreated != null) {
+      beautifiedPictureInfo.add('Creation date : ${pictureData.dateCreated}');
+    }
+    if (pictureData.location != null) {
+      beautifiedPictureInfo.add('Location : ${pictureData.location}');
+    }
+    if (pictureData.photographer != null) {
+      beautifiedPictureInfo.add('Photographer : ${pictureData.photographer}');
+    }
+    if (pictureData.secondaryCreator != null) {
+      beautifiedPictureInfo.add('Secondary creator : ${pictureData.secondaryCreator}');
+    }
+    if (pictureData.description != null) {
+      beautifiedPictureInfo.add('Description : ${pictureData.description}');
+    }
+    if (pictureData.description508 != null) {
+      beautifiedPictureInfo.add('${pictureData.description508}');
     }
   }
 }
