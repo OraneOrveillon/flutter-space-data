@@ -32,7 +32,10 @@ class SelectionMenuPage extends StatelessWidget {
               return const CustomProgressIndicator();
             }
             if (state is SolarSystemLoaded) {
+              // Sorts bodies by englishName
+              state.solarSystem.bodies.sort((bodyA, bodyB) => bodyA.englishName.compareTo(bodyB.englishName));
               ScrollController scrollController = ScrollController();
+
               return Column(
                 children: [
                   TopTitle(label: label),

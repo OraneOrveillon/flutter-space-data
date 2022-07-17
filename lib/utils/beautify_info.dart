@@ -98,8 +98,5 @@ class BeautifyPictureInfo {
     if (pictureData.description != null) {
       beautifiedPictureInfo.add('Description : ${pictureData.description}');
     }
-    if (pictureData.description508 != null) {
-      beautifiedPictureInfo.add('${pictureData.description508}');
-    }
   }
 }
