@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/solar_system_bloc/solar_system_bloc.dart';
+import '../../bloc/wiki_bloc/wiki_bloc.dart';
 import '../../data/model/solar_system_model.dart';
 import '../../utils/beautify_info.dart';
 import '../../utils/constants.dart';
@@ -20,16 +21,16 @@ class InfoPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SolarSystemBloc, SolarSystemState>(
-      builder: (context, state) {
-        if (state is SolarSystemLoading) {
+      builder: (context, solarSystemState) {
+        if (solarSystemState is SolarSystemLoading) {
           return const CustomProgressIndicator();
         }
-        if (state is SingleBodyLoaded) {
-          List<String> bodyInfo = BeautifyBodyInfo(body: state.body).beautifiedBodyInfo;
+        if (solarSystemState is SingleBodyLoaded) {
+          List<String> bodyInfo = BeautifyBodyInfo(body: solarSystemState.body).beautifiedBodyInfo;
 
           return Column(
             children: [
-              TopTitle(label: state.body.englishName),
+              TopTitle(label: solarSystemState.body.englishName),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(MyPaddings.large, 0, MyPaddings.large, MyPaddings.large),
@@ -61,56 +62,74 @@ class InfoPart extends StatelessWidget {
                                         ScrollController scrollController = ScrollController();
                                         return MyScrollbar(
                                           scrollController: scrollController,
-                                          child: ListView.separated(
-                                            separatorBuilder: (context, index) => const SizedBox(
-                                              height: MyPaddings.small,
-                                            ),
-                                            itemCount: bodyInfo.length,
-                                            controller: scrollController,
-                                            itemBuilder: (context, index) {
-                                              if (index != bodyInfo.length - 1) {
-                                                return TypingText(content: bodyInfo[index]);
-                                              } else {
-                                                if (state.body.moons != null) {
-                                                  List<Widget> chipMoons = [];
-                                                  for (Moon moon in state.body.moons!) {
-                                                    chipMoons.add(
-                                                      FutureBuilder(
-                                                        future: Translator().translate(moon.moon),
-                                                        builder: (context, snapshot) {
-                                                          if (snapshot.hasData) {
-                                                            return Padding(
-                                                              padding: const EdgeInsets.all(MyPaddings.verySmall),
-                                                              child: ActionChip(
-                                                                labelStyle: MyTextStyles.chip,
-                                                                label: Text(snapshot.data as String),
-                                                                backgroundColor: MyColors.light,
-                                                                onPressed: () => Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                    builder: (context) => InfoPage(
-                                                                      bodyEnglishName: snapshot.data as String,
-                                                                      bodyUrl: moon.rel,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }
-                                                          return const CustomProgressIndicator();
-                                                        },
-                                                      ),
-                                                    );
-                                                  }
-                                                  return Wrap(
-                                                    children: [
-                                                      TypingText(content: bodyInfo[index]),
-                                                      ...chipMoons,
-                                                    ],
-                                                  );
-                                                }
-                                                return Container();
+                                          child: BlocBuilder<WikiBloc, WikiState>(
+                                            builder: (context, wikiState) {
+                                              if (wikiState is WikiLoading) {
+                                                return const CustomProgressIndicator();
                                               }
+                                              if (wikiState is WikiLoaded) {
+                                                return ListView.separated(
+                                                  separatorBuilder: (context, index) => const SizedBox(
+                                                    height: MyPaddings.small,
+                                                  ),
+                                                  itemCount: bodyInfo.length + 1,
+                                                  controller: scrollController,
+                                                  itemBuilder: (context, index) {
+                                                    if (index == 0) {
+                                                      return TypingText(
+                                                          content: ((wikiState.props.first as List<dynamic>).last
+                                                                  as List<dynamic>)
+                                                              .first);
+                                                    } else if (index != bodyInfo.length - 1) {
+                                                      return TypingText(content: bodyInfo[index]);
+                                                    } else {
+                                                      if (solarSystemState.body.moons != null) {
+                                                        List<Widget> chipMoons = [];
+                                                        for (Moon moon in solarSystemState.body.moons!) {
+                                                          chipMoons.add(
+                                                            FutureBuilder(
+                                                              future: Translator().translate(moon.moon),
+                                                              builder: (context, snapshot) {
+                                                                if (snapshot.hasData) {
+                                                                  return Padding(
+                                                                    padding: const EdgeInsets.all(MyPaddings.verySmall),
+                                                                    child: ActionChip(
+                                                                      labelStyle: MyTextStyles.chip,
+                                                                      label: Text(snapshot.data as String),
+                                                                      backgroundColor: MyColors.light,
+                                                                      onPressed: () => Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) => InfoPage(
+                                                                            bodyEnglishName: snapshot.data as String,
+                                                                            bodyUrl: moon.rel,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                }
+                                                                return const CustomProgressIndicator();
+                                                              },
+                                                            ),
+                                                          );
+                                                        }
+                                                        return Wrap(
+                                                          children: [
+                                                            TypingText(content: bodyInfo[index]),
+                                                            ...chipMoons,
+                                                          ],
+                                                        );
+                                                      }
+                                                      return Container();
+                                                    }
+                                                  },
+                                                );
+                                              }
+                                              if (wikiState is WikiError) {
+                                                const CustomError();
+                                              }
+                                              return Container();
                                             },
                                           ),
                                         );
@@ -131,7 +150,7 @@ class InfoPart extends StatelessWidget {
             ],
           );
         }
-        if (state is SolarSystemError) {
+        if (solarSystemState is SolarSystemError) {
           const CustomError();
         }
         return Container();
